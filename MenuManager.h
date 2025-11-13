@@ -1,8 +1,3 @@
-/**
- * @file MenuManager.h
- * @brief Header for the menu manager system.
- */
-
 #ifndef MENU_MANAGER_H
 #define MENU_MANAGER_H
 
@@ -16,10 +11,13 @@ public:
     void run();
 
 private:
+
     std::vector<std::string> games;
     void display_menu();
-    int get_choice();
     void run_xo_game();
+    void run_numerical_ttt();
+    int get_choice();
+  
 };
 
-#endif // MENU_MANAGER_H
+#endif
