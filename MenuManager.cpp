@@ -4,13 +4,13 @@
 #include <ctime>
 #include "NumericalTTT_Classes.h"
 #include "XO_Classes.h"
-
-
+#include "SUS_Classes.h"
 
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "Exit" }; 
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Exit" };
+    srand(static_cast<unsigned int>(time(0)));
 }
 
 void MenuManager::run() {
@@ -27,6 +27,10 @@ void MenuManager::run() {
             run_numerical_ttt();
         }
         else if (choice == 3) {
+            cout << "\n Running SUS Game...\n";
+            run_sus_game();
+        }
+        else if (choice == 4) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -51,10 +55,8 @@ int MenuManager::get_choice() {
     return choice;
 }
 
-//  XO Game
+// ---------------- XO Game ----------------
 void MenuManager::run_xo_game() {
-    srand(static_cast<unsigned int>(time(0)));
-
     UI<char>* game_ui = new XO_UI();
     Board<char>* xo_board = new X_O_Board();
     Player<char>** players = game_ui->setup_players();
@@ -68,35 +70,49 @@ void MenuManager::run_xo_game() {
     delete[] players;
 }
 
-//  Numerical Tic-Tac-Toe Game
+// ---------------- Numerical Tic-Tac-Toe ----------------
 void MenuManager::run_numerical_ttt() {
     cout << "\nWelcome to the Numerical Tic-Tac-Toe\n";
     cout << "How to play it:\n";
     cout << "1️: Player 1 uses ODD numbers (1, 3, 5, 7, 9)\n";
     cout << "2️: Player 2 uses EVEN numbers (2, 4, 6, 8)\n";
-    cout << " To win make a line (row, column, diagonal) that sums to 15\n\n";
+    cout << "To win make a line (row, column, diagonal) that sums to 15\n\n";
 
-    void run_numerical_game(); {
-        srand(static_cast<unsigned int>(time(0)));
+    UI<int>* game_ui = new Numerical_UI();
+    Board<int>* num_board = new Numerical_Board();
+    Player<int>** players = game_ui->setup_players();
 
-        UI<int>* game_ui = new Numerical_UI();
-        Board<int>* num_board = new Numerical_Board();
-        Player<int>** players = game_ui->setup_players();
+    GameManager<int> game(num_board, players, game_ui);
+    game.run();
 
-        GameManager<int> game(num_board, players, game_ui);
-        game.run();
-
-        delete num_board;
-        for (int i = 0; i < 2; ++i)
-            delete players[i];
-        delete[] players;
-    }
-
-
-
-
-
-
-
+    delete num_board;
+    for (int i = 0; i < 2; ++i)
+        delete players[i];
+    delete[] players;
 }
 
+// SUS Game 
+void MenuManager::run_sus_game() {
+    int choice;
+    cout << "\n1- Vs Human\n2- Vs AI\n";
+    cin >> choice;
+
+    string p1, p2;
+
+    cout << "Enter Player 1 name (S): ";
+    cin >> p1;
+
+    if (choice == 1) {
+        cout << "Enter Player 2 name (U): ";
+        cin >> p2;
+
+        SUS_Game g(p1, p2, false);
+        g.play();
+    }
+    else {
+        p2 = "AI";
+
+        SUS_Game g(p1, p2, true);
+        g.play();
+    }
+}
