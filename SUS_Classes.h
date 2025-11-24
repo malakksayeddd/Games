@@ -35,8 +35,7 @@ private:
     string player1;
     string player2;
 
-    pair<int, int> bestMove();   // AI logic
-
+    pair<int, int> bestMove();  
 public:
     SUS_Game(string name1, string name2, bool ai);
     void play();
