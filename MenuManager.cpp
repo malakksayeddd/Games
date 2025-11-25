@@ -5,11 +5,12 @@
 #include "NumericalTTT_Classes.h"
 #include "XO_Classes.h"
 #include "SUS_Classes.h"
+#include "FourInARow_Classes.h"
 
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -31,6 +32,10 @@ void MenuManager::run() {
             run_sus_game();
         }
         else if (choice == 4) {
+            cout << "\n Running Four-in-a-Row...\n";
+            run_four_in_a_row();
+        }
+        else if (choice == 5) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -115,4 +120,26 @@ void MenuManager::run_sus_game() {
         SUS_Game g(p1, p2, true);
         g.play();
     }
+}
+
+// ---------------- Four-in-a-Row ----------------
+void MenuManager::run_four_in_a_row() {
+    cout << "\nWelcome to Four-in-a-Row!\n";
+    cout << "Instructions:\n";
+    cout << "-> Players take turns dropping their mark into a column\n";
+    cout << "-> Marks fall to the lowest available position in the column\n";
+    cout << "-> First to get 4 in a row (horizontal, vertical, or diagonal) wins!\n\n";
+
+    UI<char>* game_ui = new FourInARow_UI();
+    Board<char>* board = new FourInARow_Board();
+    Player<char>** players = game_ui->setup_players();
+
+    GameManager<char> game(board, players, game_ui);
+    game.run();
+
+    delete board;
+    for (int i = 0; i < 2; ++i)
+        delete players[i];
+    delete[] players;
+    delete game_ui;
 }

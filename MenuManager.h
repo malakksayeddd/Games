@@ -7,6 +7,7 @@
 #include "XO_Classes.h"
 #include "NumericalTTT_Classes.h"
 #include "SUS_Classes.h"
+#include "FourInARow_Classes.h"
 
 class MenuManager {
 public:
@@ -20,7 +21,8 @@ private:
     void display_menu();
     void run_xo_game();
     void run_numerical_ttt();
-    void run_sus_game();    
+    void run_sus_game();
+    void run_four_in_a_row();
     int get_choice();
 };
 
