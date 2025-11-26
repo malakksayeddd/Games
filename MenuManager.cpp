@@ -50,6 +50,10 @@ void MenuManager::run() {
             run_obstacles_ttt();
         }
         else if (choice == 8) {
+            cout << "\n Running 4x4 Tic-Tac-Toe...\n";
+            run_four_by_four();
+        }
+        else if (choice == 9) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
