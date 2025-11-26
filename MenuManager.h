@@ -8,6 +8,7 @@
 #include "NumericalTTT_Classes.h"
 #include "SUS_Classes.h"
 #include "FourInARow_Classes.h"
+#include "MisereTTT_Classes.h"
 
 class MenuManager {
 public:
@@ -23,6 +24,7 @@ private:
     void run_numerical_ttt();
     void run_sus_game();
     void run_four_in_a_row();
+    void run_misere_ttt();
     int get_choice();
 };
 
