@@ -9,6 +9,9 @@ add_executable(MiniBoards
     NumericalTTT_Classes.cpp
     SUS_Classes.cpp
     FourInARow_Classes.cpp
+    InfinityTTT_Classes.cpp
+    MisereTTT_Classes.cpp
+    ObstaclesTTT_Classes.cpp
 )
 
 target_include_directories(MiniBoards PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

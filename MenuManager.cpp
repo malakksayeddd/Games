@@ -8,10 +8,11 @@
 #include "FourInARow_Classes.h"
 #include "MisereTTT_Classes.h"
 #include "InfinityTTT_Classes.h"
+#include "ObstaclesTTT_Classes.h"
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)","Infinity Tic-Tac-Toe",  "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -41,16 +42,20 @@ void MenuManager::run() {
     run_misere_ttt();
        }
         else if (choice == 6) {
-    cout << "\n Running Infinity Tic-Tac-Toe Game...\n";
-    run_infinity_ttt();
-}
-else if (choice == 7) {
-    cout << "\n Exiting the program. Goodbye!\n";
-    break;
-       }
-else {
-    cout << " Invalid choice. Please try again.\n";
-     }
+            cout << "\n Running Infinity Tic-Tac-Toe Game...\n";
+            run_infinity_ttt();
+        }
+        else if (choice == 7) {
+            cout << "\n Running Obstacles Tic-Tac-Toe...\n";
+            run_obstacles_ttt();
+        }
+        else if (choice == 8) {
+            cout << "\n Exiting the program. Goodbye!\n";
+            break;
+        }
+        else {
+            cout << " Invalid choice. Please try again.\n";
+        }
     }
 }
 
@@ -230,4 +235,11 @@ void MenuManager::run_infinity_ttt()
 
     delete board;
     delete p1; delete p2; delete ui;
+}
+
+// ---------------- Obstacles TTT ----------------
+void MenuManager::run_obstacles_ttt() {
+    Obstacles_UI* game_ui = new Obstacles_UI();
+    game_ui->launch();
+    delete game_ui;
 }

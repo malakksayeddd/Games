@@ -10,6 +10,8 @@
 #include "FourInARow_Classes.h"
 #include "MisereTTT_Classes.h"
 #include "InfinityTTT_Classes.h"
+#include "ObstaclesTTT_Classes.h"
+
 class MenuManager {
 public:
     MenuManager();
@@ -26,6 +28,7 @@ private:
     void run_four_in_a_row();
     void run_misere_ttt();
     void run_infinity_ttt();
+    void run_obstacles_ttt();
     int get_choice();
 };
 
