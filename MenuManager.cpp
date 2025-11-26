@@ -6,11 +6,12 @@
 #include "XO_Classes.h"
 #include "SUS_Classes.h"
 #include "FourInARow_Classes.h"
+#include "MisereTTT_Classes.h"
 
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)",  "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -35,13 +36,17 @@ void MenuManager::run() {
             cout << "\n Running Four-in-a-Row...\n";
             run_four_in_a_row();
         }
-        else if (choice == 5) {
-            cout << "\n Exiting the program. Goodbye!\n";
-            break;
-        }
-        else {
-            cout << " Invalid choice. Please try again.\n";
-        }
+       else if (choice == 5) {
+    cout << "\n Running Misère Tic-Tac-Toe...\n";
+    run_misere_ttt();
+       }
+else if (choice == 6) {
+    cout << "\n Exiting the program. Goodbye!\n";
+    break;
+       }
+else {
+    cout << " Invalid choice. Please try again.\n";
+     }
     }
 }
 
@@ -142,4 +147,19 @@ void MenuManager::run_four_in_a_row() {
         delete players[i];
     delete[] players;
     delete game_ui;
+    
+}
+
+
+// ---------------- Misère Tic-Tac-Toe ----------------
+void MenuManager::run_misere_ttt() {
+    // We use the standalone MisereGame class (MisereTTT_Classes.*)
+    string p1, p2;
+    cout << "Enter Player 1 name (X): ";
+    cin >> p1;
+    cout << "Enter Player 2 name (O): ";
+    cin >> p2;
+
+    MisereGame g(p1, p2);
+    g.play();
 }
