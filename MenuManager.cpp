@@ -7,11 +7,11 @@
 #include "SUS_Classes.h"
 #include "FourInARow_Classes.h"
 #include "MisereTTT_Classes.h"
-
+#include "InfinityTTT_Classes.h"
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)",  "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)","Infinity Tic-Tac-Toe",  "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -40,7 +40,11 @@ void MenuManager::run() {
     cout << "\n Running Misère Tic-Tac-Toe...\n";
     run_misere_ttt();
        }
-else if (choice == 6) {
+        else if (choice == 6) {
+    cout << "\n Running Infinity Tic-Tac-Toe Game...\n";
+    run_infinity_ttt();
+}
+else if (choice == 7) {
     cout << "\n Exiting the program. Goodbye!\n";
     break;
        }
@@ -162,4 +166,68 @@ void MenuManager::run_misere_ttt() {
 
     MisereGame g(p1, p2);
     g.play();
+}
+
+// ---------------- Infinity TTT ----------------
+
+void MenuManager::run_infinity_ttt()
+{
+    cout << "\n=== Infinity Tic Tac Toe ===\n";
+    cout << "Each player has ONLY 3 marks. Oldest mark is removed.\n";
+
+    Infinity_UI* ui = new Infinity_UI();
+    Infinity_Board* board = new Infinity_Board();
+
+    string n1 = "Player X";
+    string n2;
+
+    int choice;
+    cout << "Choose opponent:\n1) Human\n2) Computer\nYour choice: ";
+    cin >> choice;
+
+    Player<char>* p1 = ui->create_player(n1, 'X', PlayerType::HUMAN);
+
+    Player<char>* p2;
+    if (choice == 1)
+    {
+        n2 = "Player O";
+        p2 = ui->create_player(n2, 'O', PlayerType::HUMAN);
+    }
+    else
+    {
+        n2 = "Computer";
+        p2 = ui->create_player(n2, 'O', PlayerType::AI);
+    }
+
+    p1->set_board_ptr(board);
+    p2->set_board_ptr(board);
+
+    Player<char>* current = p1;
+
+    while (true)
+    {
+        ui->display_board_matrix(board->get_board_matrix());
+
+        Move<char>* move = ui->get_move(current);
+
+        if (!board->update_board(move))
+        {
+            cout << "Invalid move! Try again.\n";
+            delete move;
+            continue;
+        }
+        delete move;
+
+        if (board->is_win(current))
+        {
+            ui->display_board_matrix(board->get_board_matrix());
+            cout << current->get_name() << " wins!\n";
+            break;
+        }
+
+        current = (current == p1 ? p2 : p1);
+    }
+
+    delete board;
+    delete p1; delete p2; delete ui;
 }
