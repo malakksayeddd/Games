@@ -243,3 +243,25 @@ void MenuManager::run_obstacles_ttt() {
     game_ui->launch();
     delete game_ui;
 }
+// ---------------- 4x4 Tic Tac Toe ----------------
+void MenuManager::run_four_by_four() {
+    cout << "\nWelcome to 4x4 Tic Tac Toe!\n";
+    cout << "Rules:\n";
+    cout << "-> Each player has 4 tokens.\n";
+    cout << "-> You can only MOVE your tokens to an adjacent EMPTY square.\n";
+    cout << "-> No diagonal movement, no jumping over tokens.\n";
+    cout << "-> First to align 3 tokens wins (row, column, diagonal).\n\n";
+
+    UI<char>* game_ui = new FourByFour_UI();
+    Board<char>* board = new FourByFour_Board();
+    Player<char>** players = game_ui->setup_players();
+
+    GameManager<char> game(board, players, game_ui);
+    game.run();
+
+    delete board;
+    for (int i = 0; i < 2; ++i)
+        delete players[i];
+    delete[] players;
+    delete game_ui;
+}
