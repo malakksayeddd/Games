@@ -29,6 +29,7 @@ private:
     void run_misere_ttt();
     void run_infinity_ttt();
     void run_obstacles_ttt();
+    void run_four_by_four();
     int get_choice();
 };
 
