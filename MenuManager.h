@@ -9,7 +9,7 @@
 #include "SUS_Classes.h"
 #include "FourInARow_Classes.h"
 #include "MisereTTT_Classes.h"
-
+#include "InfinityTTT_Classes.h"
 class MenuManager {
 public:
     MenuManager();
@@ -25,6 +25,7 @@ private:
     void run_sus_game();
     void run_four_in_a_row();
     void run_misere_ttt();
+    void run_infinity_ttt();
     int get_choice();
 };
 
