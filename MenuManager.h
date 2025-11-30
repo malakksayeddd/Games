@@ -11,6 +11,9 @@
 #include "MisereTTT_Classes.h"
 #include "InfinityTTT_Classes.h"
 #include "ObstaclesTTT_Classes.h"
+#include "FourByFour_Board.h"
+#include "FourByFour_UI.h"
+#include "FiveByFive_Classes.h"
 
 class MenuManager {
 public:
@@ -30,6 +33,7 @@ private:
     void run_infinity_ttt();
     void run_obstacles_ttt();
     void run_four_by_four();
+    void run_five_by_five();
     int get_choice();
 };
 

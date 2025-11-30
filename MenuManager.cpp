@@ -9,10 +9,11 @@
 #include "MisereTTT_Classes.h"
 #include "InfinityTTT_Classes.h"
 #include "ObstaclesTTT_Classes.h"
+#include "FiveByFive_Classes.h"
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -54,6 +55,10 @@ void MenuManager::run() {
             run_four_by_four();
         }
         else if (choice == 9) {
+            cout << "\n Running 5x5 Tic-Tac-Toe...\n";
+            run_five_by_five();
+        }
+        else if (choice == 10) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -267,5 +272,12 @@ void MenuManager::run_four_by_four() {
     for (int i = 0; i < 2; ++i)
         delete players[i];
     delete[] players;
+    delete game_ui;
+}
+
+// ---------------- 5x5 Tic Tac Toe ----------------
+void MenuManager::run_five_by_five() {
+    FiveByFive_UI* game_ui = new FiveByFive_UI();
+    game_ui->launch();
     delete game_ui;
 }
