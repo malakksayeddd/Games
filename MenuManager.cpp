@@ -10,10 +10,11 @@
 #include "InfinityTTT_Classes.h"
 #include "ObstaclesTTT_Classes.h"
 #include "FiveByFive_Classes.h"
+#include "WordTTT_Classes.h"
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -58,7 +59,12 @@ void MenuManager::run() {
             cout << "\n Running 5x5 Tic-Tac-Toe...\n";
             run_five_by_five();
         }
-        else if (choice == 10) {
+    else if (choice == 10) {
+    cout << "\n Running Word Tic-Tac-Toe...\n";
+    run_word_ttt_menu();   
+       }
+   
+        else if (choice == 11) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -280,4 +286,43 @@ void MenuManager::run_five_by_five() {
     FiveByFive_UI* game_ui = new FiveByFive_UI();
     game_ui->launch();
     delete game_ui;
+}
+//----------------Word tic tac toe--------------
+void MenuManager::run_word_ttt() {
+    WordTTT_Board board;
+    WordTTT_UI ui;
+
+    Player<char>* players[2];
+    string p1, p2;
+    int mode;
+
+    cout << "WORD TIC TAC TEO GAME\n";
+    cout << "Choose mode:\n1) Human vs Human\n2) Human vs AI\nYour choice: ";
+    cin >> mode;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "Enter Player 1 name: ";
+    getline(cin, p1);
+
+    if (mode == 1) {
+        cout << "Enter Player 2 name: ";
+        getline(cin, p2);
+        players[0] = ui.create_player(p1, 'A', PlayerType::HUMAN);
+        players[1] = ui.create_player(p2, 'B', PlayerType::HUMAN);
+    }
+    else if (mode == 2) {
+        p2 = "AI";
+        players[0] = ui.create_player(p1, 'A', PlayerType::HUMAN);
+        players[1] = ui.create_player(p2, 'B', PlayerType::AI);
+    }
+    else {
+        cout << "Invalid mode! Exiting.\n";
+        return;
+    }
+
+    GameManager<char> game(&board, players, &ui);
+    game.run();
+
+    delete players[0];
+    delete players[1];
 }
