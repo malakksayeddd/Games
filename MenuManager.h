@@ -15,6 +15,7 @@
 #include "FourByFour_UI.h"
 #include "FiveByFive_Classes.h"
 #include "WordTTT_Classes.h"
+#include "PyramidTTT_Classes.h"
 class MenuManager {
 public:
     MenuManager();
@@ -34,8 +35,8 @@ private:
     void run_obstacles_ttt();
     void run_four_by_four();
     void run_five_by_five();
-   void run_word_ttt();
-
+    void run_word_ttt();
+    void run_pyramid();
     int get_choice();
 };
 
