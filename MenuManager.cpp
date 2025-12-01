@@ -14,7 +14,7 @@
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -63,8 +63,13 @@ void MenuManager::run() {
     cout << "\n Running Word Tic-Tac-Toe...\n";
     run_word_ttt_menu();   
        }
-   
-        else if (choice == 11) {
+
+      else if (choice ==11) {
+            cout << "\n Running Pyramid Tic-Tac-Toe...\n";
+            run_pyramid();
+        }
+        
+        else if (choice == 12) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -325,4 +330,20 @@ void MenuManager::run_word_ttt() {
 
     delete players[0];
     delete players[1];
+}
+
+//------------------------Pyramid Tic-Tac-Toe------------------------
+void MenuManager::run_pyramid() {
+    UI<char>* ui = new Pyramid_UI();
+    Board<char>* b = new Pyramid_Board();
+    Player<char>** p = ui->setup_players();
+
+    GameManager<char> game(b, p, ui);
+    game.run();
+
+    delete b;
+    delete p[0];
+    delete p[1];
+    delete[] p;
+    delete ui;
 }
