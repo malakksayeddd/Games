@@ -34,7 +34,7 @@ private:
     void run_obstacles_ttt();
     void run_four_by_four();
     void run_five_by_five();
-    void run_word_ttt(int mode);
+   void run_word_ttt();
 };
     int get_choice();
 };
