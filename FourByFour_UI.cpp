@@ -13,9 +13,16 @@ Player<char>* FourByFour_UI::create_player(string& name, char symbol, PlayerType
 }
 
 Move<char>* FourByFour_UI::get_move(Player<char>* player) {
-    int x, y, nx, ny;
 
     cout << player->get_name() << " (" << player->get_symbol() << ") move\n";
+
+
+    if (player->get_type() == PlayerType::COMPUTER) {
+        FourByFour_AI ai(player->get_symbol());
+        return ai.get_best_move((FourByFour_Board*)player->get_board_ptr());
+    }
+
+    int x, y, nx, ny;
 
     cout << "From (row col): ";
     cin >> x >> y;
@@ -25,3 +32,4 @@ Move<char>* FourByFour_UI::get_move(Player<char>* player) {
 
     return new Move<char>(x, y, nx, ny, player->get_symbol());
 }
+
