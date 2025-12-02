@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
+#include <climits>
 #include "FiveByFiveTTT_Classes.h"
 
 using namespace std;
@@ -90,15 +91,141 @@ bool FiveByFive_Board::is_draw(Player<char>* player) {
 
 FiveByFive_UI::FiveByFive_UI() : UI<char>(3), boardPtr(nullptr) {}
 
+// ================== AI Functions ==================
+
+static int eval3(char a, char b, char c, char ai, char human, char blank) {
+    int aiCount = 0, huCount = 0, emptyCount = 0;
+    
+    if (a == ai) aiCount++; else if (a == human) huCount++; else if (a == blank) emptyCount++;
+    if (b == ai) aiCount++; else if (b == human) huCount++; else if (b == blank) emptyCount++;
+    if (c == ai) aiCount++; else if (c == human) huCount++; else if (c == blank) emptyCount++;
+    
+    // Completed 3-in-a-row
+    if (aiCount == 3) return 100;
+    if (huCount == 3) return -100;
+    
+    // Mixed line = useless
+    if (aiCount > 0 && huCount > 0) return 0;
+    
+    // Potential (2 with 1 empty)
+    if (aiCount == 2 && emptyCount == 1) return 10;
+    if (huCount == 2 && emptyCount == 1) return -10;
+    
+    // Single with potential
+    if (aiCount == 1 && emptyCount == 2) return 1;
+    if (huCount == 1 && emptyCount == 2) return -1;
+    
+    return 0;
+}
+
+static int evaluateBoard(FiveByFive_Board* b, char ai, char human) {
+    int score = 0;
+    const auto& board = b->get_board_matrix();
+    char blank = '.';
+    
+    for (int r = 0; r < 5; r++)
+        for (int c = 0; c <= 2; c++)
+            score += eval3(board[r][c], board[r][c+1], board[r][c+2], ai, human, blank);
+    
+    for (int c = 0; c < 5; c++)
+        for (int r = 0; r <= 2; r++)
+            score += eval3(board[r][c], board[r+1][c], board[r+2][c], ai, human, blank);
+    
+    for (int r = 0; r <= 2; r++)
+        for (int c = 0; c <= 2; c++)
+            score += eval3(board[r][c], board[r+1][c+1], board[r+2][c+2], ai, human, blank);
+    
+
+    for (int r = 2; r < 5; r++)
+        for (int c = 0; c <= 2; c++)
+            score += eval3(board[r][c], board[r-1][c+1], board[r-2][c+2], ai, human, blank);
+    
+    return score;
+}
+
+static int minimax(FiveByFive_Board* b, int depth, bool isMax, char ai, char human, int alpha, int beta) {
+    if (depth == 0 || b->get_n_moves() >= 24) {
+        return evaluateBoard(b, ai, human);
+    }
+    
+    if (isMax) {
+        int best = INT_MIN;
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 5; c++) {
+                if (b->get_cell(r, c) != '.') continue;
+                
+                Move<char> move(r, c, ai);
+                b->update_board(&move);
+                int score = minimax(b, depth - 1, false, ai, human, alpha, beta);
+                b->set_cell(r, c, '.');  // Undo
+                b->decrement_moves();
+                
+                best = max(best, score);
+                alpha = max(alpha, score);
+                if (beta <= alpha) break;
+            }
+            if (beta <= alpha) break;
+        }
+        return best;
+    } else {
+        int best = INT_MAX;
+        for (int r = 0; r < 5; r++) {
+            for (int c = 0; c < 5; c++) {
+                if (b->get_cell(r, c) != '.') continue;
+                
+                Move<char> move(r, c, human);
+                b->update_board(&move);
+                int score = minimax(b, depth - 1, true, ai, human, alpha, beta);
+                b->set_cell(r, c, '.');  // Undo
+                b->decrement_moves();
+                
+                best = min(best, score);
+                beta = min(beta, score);
+                if (beta <= alpha) break;
+            }
+            if (beta <= alpha) break;
+        }
+        return best;
+    }
+}
+
+static pair<int, int> findBestMove(FiveByFive_Board* b, char ai, char human, int depth = 4) {
+    int bestScore = INT_MIN;
+    int bestR = 0, bestC = 0;
+    
+    for (int r = 0; r < 5; r++) {
+        for (int c = 0; c < 5; c++) {
+            if (b->get_cell(r, c) != '.') continue;
+            
+            Move<char> move(r, c, ai);
+            b->update_board(&move);
+            int score = minimax(b, depth - 1, false, ai, human, INT_MIN, INT_MAX);
+            b->set_cell(r, c, '.');  // Undo
+            b->decrement_moves();
+            
+            if (score > bestScore) {
+                bestScore = score;
+                bestR = r;
+                bestC = c;
+            }
+        }
+    }
+    return {bestR, bestC};
+}
+
+// ================== FiveByFive_UI Implementation ==================
+
 Move<char>* FiveByFive_UI::get_move(Player<char>* player) {
     int x, y;
 
-    if (player->get_type() == PlayerType::COMPUTER) {
-        // Random move for computer
-        do {
-            x = rand() % 5;
-            y = rand() % 5;
-        } while (boardPtr && boardPtr->get_cell(x, y) != '.');
+    if (player->get_type() == PlayerType::COMPUTER || player->get_type() == PlayerType::AI) {
+        char aiSym = player->get_symbol();
+        char humanSym = (aiSym == 'X') ? 'O' : 'X';
+        
+        cout << player->get_name() << " is thinking...\n";
+        pair<int, int> best = findBestMove(boardPtr, aiSym, humanSym, 4);
+        x = best.first;
+        y = best.second;
         
         cout << player->get_name() << " plays at (" << x << ", " << y << ")\n";
     } else {

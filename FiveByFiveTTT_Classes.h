@@ -18,6 +18,9 @@ public:
     bool game_is_over(Player<char>* player) override;
 
     int count_three_in_a_row(char sym) const;
+    char get_cell(int r, int c) const { return board[r][c]; }
+    void set_cell(int r, int c, char val) { board[r][c] = val; }
+    void decrement_moves() { n_moves--; }
 };
 
 class FiveByFive_UI : public UI<char> {
