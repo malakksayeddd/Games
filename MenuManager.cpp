@@ -9,12 +9,13 @@
 #include "MisereTTT_Classes.h"
 #include "InfinityTTT_Classes.h"
 #include "ObstaclesTTT_Classes.h"
-#include "FiveByFive_Classes.h"
+#include "FiveByFiveTTT_Classes.h"
 #include "WordTTT_Classes.h"
+#include "UltimateTTT_Classes.h"
 using namespace std;
 
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Ultimate Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -61,15 +62,18 @@ void MenuManager::run() {
         }
     else if (choice == 10) {
     cout << "\n Running Word Tic-Tac-Toe...\n";
-    run_word_ttt_menu();   
+    run_word_ttt();   
        }
 
       else if (choice ==11) {
             cout << "\n Running Pyramid Tic-Tac-Toe...\n";
             run_pyramid();
         }
-        
         else if (choice == 12) {
+            cout << "\n Running Ultimate Tic-Tac-Toe...\n";
+            run_ultimate_ttt();
+        }
+        else if (choice == 13) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -346,4 +350,11 @@ void MenuManager::run_pyramid() {
     delete p[1];
     delete[] p;
     delete ui;
+}
+
+// ---------------- Ultimate Tic-Tac-Toe ----------------
+void MenuManager::run_ultimate_ttt() {
+    Ultimate_UI* game_ui = new Ultimate_UI();
+    game_ui->launch();
+    delete game_ui;
 }

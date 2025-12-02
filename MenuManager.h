@@ -13,9 +13,10 @@
 #include "ObstaclesTTT_Classes.h"
 #include "FourByFour_Board.h"
 #include "FourByFour_UI.h"
-#include "FiveByFive_Classes.h"
+#include "FiveByFiveTTT_Classes.h"
 #include "WordTTT_Classes.h"
 #include "PyramidTTT_Classes.h"
+#include "UltimateTTT_Classes.h"
 class MenuManager {
 public:
     MenuManager();
@@ -37,6 +38,7 @@ private:
     void run_five_by_five();
     void run_word_ttt();
     void run_pyramid();
+    void run_ultimate_ttt();
     int get_choice();
 };
 
