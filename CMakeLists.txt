@@ -14,7 +14,7 @@ add_executable(MiniBoards
     ObstaclesTTT_Classes.cpp
     FourByFour_Board.cpp
     FourByFour_UI.cpp
-    FiveByFive_Classes.cpp
+    FiveByFiveTTT_Classes.cpp
     PyramidTTT_Classes.cpp
     WordTTT_Classes.cpp
     UltimateTTT_Classes.cpp
