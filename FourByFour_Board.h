@@ -12,10 +12,12 @@ public:
     bool is_lose(Player<char>* player) override;
     bool is_draw(Player<char>* player) override;
     bool game_is_over(Player<char>* player) override;
-
+    bool check_three_in_line(char symbol);
+    vector<vector<char>>& get_board() {
+        return board;}
 private:
     bool in_bounds(int r, int c);
-    bool check_three_in_line(char symbol);
+  
 };
 
 #endif
