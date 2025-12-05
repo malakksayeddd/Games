@@ -1,3 +1,11 @@
+/**
+ * @file FourInARow_Classes.cpp
+ * @brief Implementation of the Connect Four game classes.
+ *
+ * Contains the implementation of FourInARow_Board and FourInARow_UI,
+ * including AI logic using the Minimax algorithm.
+ */
+
 #include <iostream>
 #include <iomanip>
 #include <cctype>
@@ -6,13 +14,22 @@
 
 using namespace std;
 
-
+/**
+ * @brief Constructs a 6x7 Connect Four board.
+ * 
+ * Initializes all cells with the blank symbol.
+ */
 FourInARow_Board::FourInARow_Board() : Board(6, 7) {
     for (auto& row : board)
         for (auto& cell : row)
             cell = blank_symbol;
 }
 
+/**
+ * @brief Gets the lowest empty row in a column (gravity simulation).
+ * @param col The column index to check.
+ * @return The row index of the lowest empty cell, or -1 if column is full.
+ */
 int FourInARow_Board::get_lowest_row(int col) {
     for (int row = rows - 1; row >= 0; --row) {
         if (board[row][col] == blank_symbol) {
@@ -22,13 +39,21 @@ int FourInARow_Board::get_lowest_row(int col) {
     return -1; 
 }
 
+/**
+ * @brief Updates the board with a player's move.
+ * @param move Pointer to the move containing column and symbol.
+ * @return true if the move is valid and applied, false otherwise.
+ *
+ * Simulates gravity by placing the piece in the lowest empty row.
+ * Symbol 0 is used for undo operations (removes topmost piece in column).
+ */
 bool FourInARow_Board::update_board(Move<char>* move) {
     int col = move->get_y();
     char mark = move->get_symbol();
 
     if (col < 0 || col >= columns) return false;
     
-
+    // Undo operation
     if (mark == 0) {
         for (int row = 0; row < rows; ++row) {
             if (board[row][col] != blank_symbol) {
@@ -49,17 +74,38 @@ bool FourInARow_Board::update_board(Move<char>* move) {
     return true;
 }
 
+/**
+ * @brief Checks if a player has won.
+ * @param player Pointer to the player to check.
+ * @return true if the player has 4 in a row.
+ */
 bool FourInARow_Board::is_win(Player<char>* player) {
     return has_symbol_won(player->get_symbol());
 }
 
+/**
+ * @brief Checks if the game is a draw.
+ * @param player Pointer to the player to check against.
+ * @return true if board is full (42 moves) with no winner.
+ */
 bool FourInARow_Board::is_draw(Player<char>* player) {
     return (n_moves == 42 && !is_win(player));
 }
 
+/**
+ * @brief Checks if the game is over.
+ * @param player Pointer to the player to evaluate.
+ * @return true if there's a winner or draw.
+ */
 bool FourInARow_Board::game_is_over(Player<char>* player) {
     return is_win(player) || is_draw(player);
 }
+
+/**
+ * @brief Checks if a symbol has won (4 consecutive in any direction).
+ * @param sym The symbol to check ('X' or 'O').
+ * @return true if 4 in a row found horizontally, vertically, or diagonally.
+ */
 bool FourInARow_Board::has_symbol_won(char sym) {
     // Horizontal win
     for (int r = 0; r < rows; ++r) {
@@ -96,10 +142,28 @@ bool FourInARow_Board::has_symbol_won(char sym) {
     return false;
 }
 
+/**
+ * @brief Helper function to check if a symbol has won.
+ * @param b Pointer to the board.
+ * @param sym The symbol to check.
+ * @return true if the symbol has 4 in a row.
+ */
 static bool hasWon(FourInARow_Board* b, char sym) {
     return b->has_symbol_won(sym);
 }
-//  The following funcs are related to AI move calculation using Minimax algorithm
+
+// ==================== AI Functions (Minimax Algorithm) ====================
+
+/**
+ * @brief Evaluates a window of 4 cells for scoring.
+ * @param a First cell value.
+ * @param b Second cell value.
+ * @param c Third cell value.
+ * @param d Fourth cell value.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @return Score for this window (positive favors AI, negative favors human).
+ */
 static inline int eval4(char a, char b, char c, char d, char ai, char human) {
     int aiCount = 0, huCount = 0;
 
@@ -122,6 +186,16 @@ static inline int eval4(char a, char b, char c, char d, char ai, char human) {
 
     return 0;
 }
+
+/**
+ * @brief Evaluates the entire board position.
+ * @param b Pointer to the board.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @return Total score for the position.
+ *
+ * Evaluates all horizontal, vertical, and diagonal windows of 4.
+ */
 static int evaluatePosition(FourInARow_Board* b, char ai, char human) {
     int score = 0;
     const vector<vector<char>>& board = b->get_board_matrix();
@@ -180,6 +254,17 @@ static int evaluatePosition(FourInARow_Board* b, char ai, char human) {
     
     return score;
 }
+
+/**
+ * @brief Minimax algorithm for AI decision making.
+ * @param b Pointer to the board.
+ * @param depth Remaining search depth.
+ * @param isMax true if maximizing player's turn.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @param enableEval Whether to use position evaluation at depth 0.
+ * @return The evaluation score for this position.
+ */
 static int minimax(FourInARow_Board* b, int depth, bool isMax, char ai, char human, bool enableEval = true) {
     if (hasWon(b, ai)) return 10000 + depth;
     if (hasWon(b, human)) return -10000 - depth;
@@ -204,6 +289,14 @@ static int minimax(FourInARow_Board* b, int depth, bool isMax, char ai, char hum
     return best;
 }
 
+/**
+ * @brief Finds the best move for the AI player.
+ * @param b Pointer to the board.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @param depth Search depth (default 5).
+ * @return The column index for the best move.
+ */
 static int findBestMove(FourInARow_Board* b, char ai, char human, int depth = 5) {
     int bestCol = 3, bestScore = INT_MIN;
     for (int c = 0; c < 7; c++) {
@@ -220,14 +313,25 @@ static int findBestMove(FourInARow_Board* b, char ai, char human, int depth = 5)
     }
     return bestCol;
 }
-// This is the END of AI related functions
+// ==================== End of AI Functions ====================
 
+// ==================== FourInARow_UI Implementation ====================
 
+/**
+ * @brief Constructs the Four-in-a-Row UI.
+ */
 FourInARow_UI::FourInARow_UI() : UI<char>("======= 4 IN A ROW =======", 3) {
     player_difficulty[0] = 0;
     player_difficulty[1] = 0;
 }
 
+/**
+ * @brief Creates a player for the game.
+ * @param name Reference to the player's name.
+ * @param symbol The player's symbol ('X' or 'O').
+ * @param type The type of player (Human or AI).
+ * @return Pointer to the created Player object.
+ */
 Player<char>* FourInARow_UI::create_player(string& name, char symbol, PlayerType type) {
     cout << "Creating " << (type == PlayerType::HUMAN ? "human" : "AI")
         << " player: " << name << " (" << symbol << ")\n";
@@ -235,6 +339,10 @@ Player<char>* FourInARow_UI::create_player(string& name, char symbol, PlayerType
     return new Player<char>(name, symbol, type);
 }
 
+/**
+ * @brief Sets up both players with names, types, and AI difficulty.
+ * @return Array of pointers to the two Player objects.
+ */
 Player<char>** FourInARow_UI::setup_players() {
     Player<char>** players = new Player<char>*[2];
     vector<string> type_options = { "Human", "AI" };
@@ -265,6 +373,12 @@ Player<char>** FourInARow_UI::setup_players() {
     return players;
 }
 
+/**
+ * @brief Gets the player type choice from user input.
+ * @param player_label Label for the player being configured.
+ * @param options List of type options to display.
+ * @return The selected PlayerType.
+ */
 PlayerType FourInARow_UI::get_player_type_choice(string player_label, const vector<string>& options) {
     cout << "Choose " << player_label << " type:\n";
     for (size_t i = 0; i < options.size(); ++i)
@@ -275,6 +389,14 @@ PlayerType FourInARow_UI::get_player_type_choice(string player_label, const vect
     return (choice == 2) ? PlayerType::AI : PlayerType::HUMAN;
 }
 
+/**
+ * @brief Gets a move from the player.
+ * @param player Pointer to the current player.
+ * @return Pointer to a Move object with the selected column.
+ *
+ * For humans: prompts for column input (0-6).
+ * For AI: uses minimax to find optimal column.
+ */
 Move<char>* FourInARow_UI::get_move(Player<char>* player) {
     int col;
     
@@ -301,7 +423,11 @@ Move<char>* FourInARow_UI::get_move(Player<char>* player) {
     return new Move<char>(0, col, player->get_symbol());
 }
 
-
+/**
+ * @brief Launches the Four-in-a-Row game.
+ *
+ * Creates the board, sets up players, and runs the game loop.
+ */
 void FourInARow_UI::launch() {
     srand(static_cast<unsigned int>(time(0)));
 

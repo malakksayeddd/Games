@@ -1,11 +1,31 @@
+/**
+ * @file FourByFour_AI.cpp
+ * @brief Implementation of the AI player for 4x4 Tic-Tac-Toe.
+ *
+ * Contains the Minimax algorithm implementation for finding optimal moves.
+ */
+
 #include "FourByFour_AI.h"
 #include <limits>
 
+/**
+ * @brief Constructs an AI player with the given symbol.
+ * @param symbol The AI's playing symbol ('X' or 'O').
+ */
 FourByFour_AI::FourByFour_AI(char symbol) {
     ai_symbol = symbol;
     human_symbol = (symbol == 'X' ? 'O' : 'X');
 }
 
+/**
+ * @brief Finds and returns the best move for the AI.
+ * 
+ * Evaluates all possible moves using minimax and selects
+ * the one with the highest score.
+ * 
+ * @param board Pointer to the current game board.
+ * @return Pointer to the optimal Move object.
+ */
 Move<char>* FourByFour_AI::get_best_move(FourByFour_Board* board) {
     int bestScore = std::numeric_limits<int>::min();
     Move<char>* bestMove = nullptr;
@@ -31,7 +51,7 @@ Move<char>* FourByFour_AI::get_best_move(FourByFour_Board* board) {
 
                         int score = minimax(board, 0, false);
 
-                        // el backtracking
+                        // Backtracking - restore original position
                         auto& bb = board->get_board();
                         bb[x][y] = ai_symbol;
                         bb[nx][ny] = '.';
@@ -45,6 +65,17 @@ Move<char>* FourByFour_AI::get_best_move(FourByFour_Board* board) {
                 }}}}
     return bestMove;}
 
+/**
+ * @brief Minimax algorithm for evaluating board positions.
+ * 
+ * Recursively evaluates game states to find the optimal score.
+ * Uses a depth limit of 4 to prevent excessive computation.
+ * 
+ * @param board Pointer to the game board.
+ * @param depth Current search depth.
+ * @param maximizing True if AI's turn (maximizing), false otherwise.
+ * @return Score value: positive favors AI, negative favors human.
+ */
 int FourByFour_AI::minimax(FourByFour_Board* board, int depth, bool maximizing) {
 
 
@@ -77,7 +108,7 @@ int FourByFour_AI::minimax(FourByFour_Board* board, int depth, bool maximizing) 
 
                             int score = minimax(board, depth + 1, false);
 
-                          //el backtracking
+                          // Backtracking - restore position
                             b[x][y] = ai_symbol;
                             b[nx][ny] = '.';
 
@@ -109,7 +140,7 @@ int FourByFour_AI::minimax(FourByFour_Board* board, int depth, bool maximizing) 
 
                             int score = minimax(board, depth + 1, true);
 
-                            //el backtracking
+                            // Backtracking - restore position
                             b[x][y] = human_symbol;
                             b[nx][ny] = '.';
 

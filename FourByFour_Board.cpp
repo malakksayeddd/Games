@@ -1,6 +1,16 @@
+/**
+ * @file FourByFour_Board.cpp
+ * @brief Implementation of the 4x4 Tic-Tac-Toe board class.
+ */
+
 #include "FourByFour_Board.h"
 #include <cmath>
 
+/**
+ * @brief Constructs a 4x4 board with initial piece placement.
+ * 
+ * Sets up the board with alternating X and O pieces on the top and bottom rows.
+ */
 FourByFour_Board::FourByFour_Board()
     : Board<char>(4, 4)
 {
@@ -13,13 +23,29 @@ FourByFour_Board::FourByFour_Board()
 }
 
 
-
+/**
+ * @brief Checks if coordinates are within board bounds.
+ * @param r Row index.
+ * @param c Column index.
+ * @return true if coordinates are valid (0-3), false otherwise.
+ */
 bool FourByFour_Board::in_bounds(int r, int c) {
     return r >= 0 && r < 4 && c >= 0 && c < 4;
 }
 
 
-
+/**
+ * @brief Updates the board by moving a piece.
+ * 
+ * Validates that:
+ * - Source and destination are in bounds
+ * - Player is moving their own piece
+ * - Destination is empty
+ * - Move is exactly one cell horizontally or vertically
+ * 
+ * @param move Pointer to the move containing source and destination.
+ * @return true if the move was valid and applied, false otherwise.
+ */
 bool FourByFour_Board::update_board(Move<char>* move) {
     int x = move->get_x();
     int y = move->get_y();
@@ -50,7 +76,14 @@ bool FourByFour_Board::update_board(Move<char>* move) {
 }
 
 
-
+/**
+ * @brief Checks if a symbol has 3 in a row anywhere on the board.
+ * 
+ * Checks rows, columns, and both diagonals.
+ * 
+ * @param sym The symbol to check ('X' or 'O').
+ * @return true if 3 in a row exists, false otherwise.
+ */
 bool FourByFour_Board::check_three_in_line(char sym) {
     // check rows
     for (int r = 0; r < 4; r++)
@@ -80,20 +113,39 @@ bool FourByFour_Board::check_three_in_line(char sym) {
     return false;
 }
 
-
+/**
+ * @brief Checks if the player has won.
+ * @param p Pointer to the player to check.
+ * @return true if the player has 3 in a row, false otherwise.
+ */
 bool FourByFour_Board::is_win(Player<char>* p) {
     return check_three_in_line(p->get_symbol());
 }
 
+/**
+ * @brief Checks if the player has lost.
+ * @param p Pointer to the player to check.
+ * @return true if the opponent has 3 in a row, false otherwise.
+ */
 bool FourByFour_Board::is_lose(Player<char>* p) {
     char opponent = (p->get_symbol() == 'X' ? 'O' : 'X');
     return check_three_in_line(opponent);
 }
 
+/**
+ * @brief Checks if the game is a draw.
+ * @param Unused parameter.
+ * @return Always false (no draws in this variant).
+ */
 bool FourByFour_Board::is_draw(Player<char>*) {
     return false;
 }
 
+/**
+ * @brief Checks if the game is over.
+ * @param p Pointer to the player to evaluate.
+ * @return true if either player has won, false otherwise.
+ */
 bool FourByFour_Board::game_is_over(Player<char>* p) {
     return is_win(p) || is_lose(p);
 }

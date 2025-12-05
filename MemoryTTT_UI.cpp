@@ -1,3 +1,8 @@
+/**
+ * @file MemoryTTT_UI.cpp
+ * @brief Implementation of the User Interface for Memory Tic-Tac-Toe.
+ */
+
 #include "MemoryTTT_UI.h"
 #include "MemoryTTT_Classes.h"
 #include <iostream>
@@ -7,13 +12,23 @@
 
 using namespace std;
 
+/**
+ * @brief Constructs the Memory Tic-Tac-Toe UI.
+ */
 MemoryTTT_UI::MemoryTTT_UI()
     : UI<char>("Memory TicTacToe", 3)
 {
     srand(time(NULL));
 }
 
-
+/**
+ * @brief Sets up both players for the game.
+ * 
+ * Prompts user to choose game mode (Human vs Human, Human vs Computer,
+ * or Computer vs Computer).
+ * 
+ * @return Array of two Player pointers.
+ */
 Player<char>** MemoryTTT_UI::setup_players() {
     Player<char>** p = new Player<char>*[2];
 
@@ -45,10 +60,19 @@ Player<char>** MemoryTTT_UI::setup_players() {
     return p;
 }
 
+/**
+ * @brief Gets a move from the player.
+ * 
+ * For computer players, randomly selects an empty cell.
+ * For human players, prompts for row and column input with validation.
+ * 
+ * @param player Pointer to the current player.
+ * @return Pointer to the Move object.
+ */
 Move<char>* MemoryTTT_UI::get_move(Player<char>* player) {
     MemoryTTT_Board* mb = dynamic_cast<MemoryTTT_Board*>(player->get_board_ptr());
 
-    // computer
+    // Computer player - random move
     if (player->get_type() == PlayerType::COMPUTER) {
         auto e = mb->empty_cells();
         int k = rand() % e.size();
@@ -58,7 +82,7 @@ Move<char>* MemoryTTT_UI::get_move(Player<char>* player) {
         return new Move<char>(r, c, player->get_symbol());
     }
 
-    // human
+    // Human player - prompt for input
     while (true) {
         cout << player->get_name() << " (" << player->get_symbol()
              << ") enter row & col (0-2): ";
@@ -81,6 +105,15 @@ Move<char>* MemoryTTT_UI::get_move(Player<char>* player) {
         return new Move<char>(r, c, player->get_symbol());
     }
 }
+
+/**
+ * @brief Displays the board matrix with cells hidden.
+ * 
+ * Shows only the grid structure, hiding all cell values to
+ * implement the memory aspect of the game.
+ * 
+ * @param matrix The board matrix (ignored - cells are hidden).
+ */
 void MemoryTTT_UI::display_board_matrix(const vector<vector<char>>& matrix) const {
     cout << "    0   1   2\n";
     cout << "  -------------\n";

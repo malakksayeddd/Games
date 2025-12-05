@@ -1,3 +1,12 @@
+/**
+ * @file ObstaclesTTT_Classes.cpp
+ * @brief Implementation of Obstacles Tic-Tac-Toe game classes.
+ *
+ * Obstacles TTT is played on a 6x6 board where players aim to get 4 in a row.
+ * After each complete round (both players move), 2 random obstacles are added
+ * to the board, making the game progressively more challenging.
+ */
+
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
@@ -7,6 +16,13 @@
 
 using namespace std;
 
+// ==================== Obstacles_Board Implementation ====================
+
+/**
+ * @brief Constructs an empty 6x6 Obstacles board.
+ *
+ * Initializes all cells to blank ('_').
+ */
 Obstacles_Board::Obstacles_Board() : Board<char>(6, 6) {
     for (auto& row : board) {
         for (auto& cell : row) {
@@ -15,11 +31,21 @@ Obstacles_Board::Obstacles_Board() : Board<char>(6, 6) {
     }
 }
 
+/**
+ * @brief Checks if a specific cell is empty.
+ * @param x Row index (0-5).
+ * @param y Column index (0-5).
+ * @return true if the cell is blank, false otherwise.
+ */
 bool Obstacles_Board::is_cell_empty(int x, int y) const {
     if (x < 0 || x >= rows || y < 0 || y >= columns) return false;
     return board[x][y] == blank_symbol;
 }
 
+/**
+ * @brief Gets all empty cell positions on the board.
+ * @return Vector of (row, column) pairs for blank cells.
+ */
 vector<pair<int, int>> Obstacles_Board::get_empty_cells() const {
     vector<pair<int, int>> empty_cells;
     for (int i = 0; i < rows; ++i) {
@@ -32,6 +58,13 @@ vector<pair<int, int>> Obstacles_Board::get_empty_cells() const {
     return empty_cells;
 }
 
+/**
+ * @brief Updates the board with a player's move.
+ * @param move Pointer to the move containing position and symbol.
+ * @return true if the move is valid and applied, false otherwise.
+ *
+ * After every 2 moves (one round), adds 2 random obstacles to the board.
+ */
 bool Obstacles_Board::update_board(Move<char>* move) {
     int x = move->get_x();
     int y = move->get_y();
@@ -56,6 +89,11 @@ bool Obstacles_Board::update_board(Move<char>* move) {
     return true;
 }
 
+/**
+ * @brief Adds 2 random obstacles to empty cells.
+ *
+ * Selects up to 2 random empty cells and places obstacle symbols ('#').
+ */
 void Obstacles_Board::add_random_obstacles() {
     vector<pair<int, int>> empty_cells = get_empty_cells();
     
@@ -74,6 +112,13 @@ void Obstacles_Board::add_random_obstacles() {
     }
 }
 
+/**
+ * @brief Checks if a symbol has won (4 in a row).
+ * @param sym The symbol to check ('X' or 'O').
+ * @return true if 4 consecutive symbols found, false otherwise.
+ *
+ * Checks all horizontal, vertical, and diagonal lines.
+ */
 bool Obstacles_Board::has_symbol_won(char sym) {
     // Check horizontal (4 in a row)
     for (int r = 0; r < rows; ++r) {
@@ -118,24 +163,48 @@ bool Obstacles_Board::has_symbol_won(char sym) {
     return false;
 }
 
+/**
+ * @brief Checks if a player has won.
+ * @param player Pointer to the player to check.
+ * @return true if the player has 4 in a row.
+ */
 bool Obstacles_Board::is_win(Player<char>* player) {
     return has_symbol_won(player->get_symbol());
 }
 
+/**
+ * @brief Checks if the game is a draw.
+ * @param player Pointer to the player to check against.
+ * @return true if no empty cells and no winner.
+ */
 bool Obstacles_Board::is_draw(Player<char>* player) {
     vector<pair<int, int>> empty_cells = get_empty_cells();
     return empty_cells.empty() && !is_win(player);
 }
 
+/**
+ * @brief Checks if the game is over.
+ * @param player Pointer to the player to evaluate.
+ * @return true if there's a winner or draw.
+ */
 bool Obstacles_Board::game_is_over(Player<char>* player) {
     return is_win(player) || is_draw(player);
 }
 
+// ==================== Obstacles_ComputerPlayer Implementation ====================
 
-
+/**
+ * @brief Constructs a computer player for Obstacles TTT.
+ * @param name The player's name.
+ * @param symbol The player's symbol ('X' or 'O').
+ */
 Obstacles_ComputerPlayer::Obstacles_ComputerPlayer(string name, char symbol)
     : Player<char>(name, symbol, PlayerType::COMPUTER) {}
 
+/**
+ * @brief Gets a random valid move for the computer.
+ * @return Pointer to a Move object with a random empty cell position.
+ */
 Move<char>* Obstacles_ComputerPlayer::get_random_move() {
     Obstacles_Board* board = dynamic_cast<Obstacles_Board*>(boardPtr);
     if (!board) return nullptr;
@@ -150,10 +219,20 @@ Move<char>* Obstacles_ComputerPlayer::get_random_move() {
     return new Move<char>(x, y, symbol);
 }
 
+// ==================== Obstacles_UI Implementation ====================
 
-
+/**
+ * @brief Constructs the Obstacles TTT UI.
+ */
 Obstacles_UI::Obstacles_UI() : UI<char>("===== OBSTACLES TIC-TAC-TOE =====", 3), currentBoard(nullptr) {}
 
+/**
+ * @brief Creates a player for the game.
+ * @param name Reference to the player's name.
+ * @param symbol The player's symbol.
+ * @param type The type of player (Human or Computer).
+ * @return Pointer to the created Player object.
+ */
 Player<char>* Obstacles_UI::create_player(string& name, char symbol, PlayerType type) {
     if (type == PlayerType::COMPUTER) {
         cout << "Creating computer player: " << name << " (" << symbol << ")\n";
@@ -164,6 +243,14 @@ Player<char>* Obstacles_UI::create_player(string& name, char symbol, PlayerType 
     }
 }
 
+/**
+ * @brief Gets a move from the player.
+ * @param player Pointer to the current player.
+ * @return Pointer to the Move object.
+ *
+ * For computer players, generates a random move.
+ * For human players, prompts for row and column input.
+ */
 Move<char>* Obstacles_UI::get_move(Player<char>* player) {
     if (player->get_type() == PlayerType::COMPUTER) {
         Obstacles_ComputerPlayer* randomPlayer = dynamic_cast<Obstacles_ComputerPlayer*>(player);
@@ -184,6 +271,12 @@ Move<char>* Obstacles_UI::get_move(Player<char>* player) {
     return new Move<char>(x, y, player->get_symbol());
 }
 
+/**
+ * @brief Launches the Obstacles TTT game.
+ *
+ * Displays instructions, creates the board and players,
+ * and runs the game loop.
+ */
 void Obstacles_UI::launch() {
     srand(static_cast<unsigned int>(time(0)));
     cout << "\nWelcome to Obstacles Tic-Tac-Toe!\n";

@@ -1,53 +1,94 @@
+/**
+ * @file WordTTT_Classes.cpp
+ * @brief Implementation of Word Tic-Tac-Toe game classes.
+ *
+ * Word TTT uses a 3x3 board where players place letters from A-Z.
+ * The goal is to form a valid 3-letter English word from a dictionary
+ * in any row, column, or diagonal.
+ */
+
 #include "WordTTT_Classes.h"
 #include <iostream>
-#include <fstream> //3shan t2ra el dic.txt
+#include <fstream>
 #include <ctime>
 using namespace std;
 
-WordTTT_Board::WordTTT_Board() : Board<char>(3, 3) { //constractour WordTTT_Board w bakhod mn el parent constractour board 3*3
+/**
+ * @brief Constructs an empty 3x3 Word TTT board.
+ *
+ * Initializes all cells to '_' (empty) and loads the dictionary file.
+ */
+WordTTT_Board::WordTTT_Board() : Board<char>(3, 3) {
     for (int r = 0; r < rows; r++) 
         for (int c = 0; c < columns; c++)
-            board[r][c] = '_'; //ay cell fadya _
+            board[r][c] = '_';
 
-    load_dictionary("dic.txt"); //load dic.txt
+    load_dictionary("dic.txt");
 }
 
+/**
+ * @brief Loads valid 3-letter words from a dictionary file.
+ * @param path Path to the dictionary file (e.g., "dic.txt").
+ *
+ * Clears any existing dictionary, reads the file, and stores
+ * all 3-letter words in lowercase.
+ */
 void WordTTT_Board::load_dictionary(const string& path) {
-    dictionary.clear(); //clear ai words 2bl kda
-    ifstream in(path); //open file to read 
-    if (!in.is_open()) { //check lw elfile mawgod 
-        cerr << "dic.txt not found\n"; //lw ml2thsh
+    dictionary.clear();
+    ifstream in(path);
+    if (!in.is_open()) {
+        cerr << "dic.txt not found\n";
         return;
     }
     string w;
-    while (in >> w) { //to read all words fel file
-        if (w.size() == 3) { //bakhod kol el words el 3 herof 
-            transform(w.begin(), w.end(), w.begin(), ::tolower); //ahwelhom l lowercase
-            dictionary.insert(w); //edakh el klma fel set
+    while (in >> w) {
+        if (w.size() == 3) {
+            transform(w.begin(), w.end(), w.begin(), ::tolower);
+            dictionary.insert(w);
         }
     }
 }
 
-bool WordTTT_Board::is_valid_word(const string& w) const { //check el klma fel file lw ah true lw la false
+/**
+ * @brief Checks if a word exists in the dictionary.
+ * @param w The word to validate.
+ * @return true if the word is in the dictionary, false otherwise.
+ */
+bool WordTTT_Board::is_valid_word(const string& w) const {
     return (dictionary.find(w) != dictionary.end());
 }
 
+/**
+ * @brief Updates the board with a player's move.
+ * @param move Pointer to the move containing position and letter.
+ * @return true if the move is valid and applied, false otherwise.
+ *
+ * Validates that the position is within bounds and the cell is empty.
+ * Converts the letter to lowercase before placing.
+ */
 bool WordTTT_Board::update_board(Move<char>* move) {
-    int r = move->get_x(); //row
-    int c = move->get_y(); //colunm
-    char letter = tolower(move->get_symbol()); //check eno lowercase
+    int r = move->get_x();
+    int c = move->get_y();
+    char letter = tolower(move->get_symbol());
 
-    if (r < 0 || r >= rows || c < 0 || c >= columns) return false; //check mafesh input bara el board
-    if (board[r][c] != '_') return false; //check cell empty
+    if (r < 0 || r >= rows || c < 0 || c >= columns) return false;
+    if (board[r][c] != '_') return false;
 
-    board[r][c] = letter; //put el harf
-    n_moves++; //azawed moves
-    return true; //done
+    board[r][c] = letter;
+    n_moves++;
+    return true;
 }
 
+/**
+ * @brief Checks if any valid word has been formed.
+ * @param player Unused parameter.
+ * @return true if a valid word exists in any row, column, or diagonal.
+ *
+ * Checks all 3 rows, 3 columns, and 2 diagonals for complete valid words.
+ */
 bool WordTTT_Board::is_win(Player<char>*) {
 
-    //rows
+    // Check rows
     for (int r = 0; r < 3; r++) {
         string w = "";
         w += board[r][0];
@@ -57,7 +98,7 @@ bool WordTTT_Board::is_win(Player<char>*) {
             return true;
     }
 
-    //columns
+    // Check columns
     for (int c = 0; c < 3; c++) {
         string w = "";
         w += board[0][c];
@@ -67,14 +108,14 @@ bool WordTTT_Board::is_win(Player<char>*) {
             return true;
     }
 
-    //diagonal 1
+    // Check main diagonal
     string w1 = "";
     w1 += board[0][0];
     w1 += board[1][1];
     w1 += board[2][2];
     if (w1.find('_') == string::npos && is_valid_word(w1)) return true;
 
-    //diagonal 2
+    // Check anti-diagonal
     string w2 = "";
     w2 += board[2][0];
     w2 += board[1][1];
@@ -84,7 +125,12 @@ bool WordTTT_Board::is_win(Player<char>*) {
     return false;
 }
 
-bool WordTTT_Board::is_draw(Player<char>*) { // lw el board full w mafesh winner
+/**
+ * @brief Checks if the game is a draw.
+ * @param player Unused parameter.
+ * @return true if the board is full with no valid words, false otherwise.
+ */
+bool WordTTT_Board::is_draw(Player<char>*) {
     if (is_win(nullptr)) return false;
 
     for (int r = 0; r < 3; r++)
@@ -95,11 +141,20 @@ bool WordTTT_Board::is_draw(Player<char>*) { // lw el board full w mafesh winner
     return true;
 }
 
+/**
+ * @brief Checks if the game is over.
+ * @param p Pointer to a player (unused).
+ * @return true if there's a valid word or the board is full.
+ */
 bool WordTTT_Board::game_is_over(Player<char>* p) { 
     return is_win(p) || is_draw(p);
 }
 
-vector<pair<int, int>> WordTTT_Board::get_empty_cells() const { //tegma3 kol empty cells 3shan ai
+/**
+ * @brief Gets all empty cell positions on the board.
+ * @return Vector of (row, column) pairs for cells marked with '_'.
+ */
+vector<pair<int, int>> WordTTT_Board::get_empty_cells() const {
     vector<pair<int, int>> v;
     for (int r = 0; r < 3; r++)
         for (int c = 0; c < 3; c++)
@@ -110,30 +165,42 @@ vector<pair<int, int>> WordTTT_Board::get_empty_cells() const { //tegma3 kol emp
 
 
 
-//function l tahded harka el ai w player
+/**
+ * @brief Gets a move from the player (human or AI).
+ * @param player Pointer to the current player.
+ * @return Pointer to a WordTTT_Move with position and letter.
+ *
+ * For human players: prompts for row, column, and letter input.
+ * For AI players: uses a multi-level strategy:
+ * 1. Try to win by completing a valid word
+ * 2. Block opponent from winning
+ * 3. Choose a letter that could lead to a valid word
+ * 4. Random move as fallback
+ */
 Move<char>* WordTTT_UI::get_move(Player<char>* player) {
     WordTTT_Board* b = dynamic_cast<WordTTT_Board*>(player->get_board_ptr());
-    auto empty = b->get_empty_cells(); //ashof elempty cells
+    auto empty = b->get_empty_cells();
 
-    if (empty.empty()) return nullptr; //lw mafesh cells empty 
+    if (empty.empty()) return nullptr;
 
-    if (player->get_type() == PlayerType::HUMAN) { // lw human hatlob row w colunm
+    if (player->get_type() == PlayerType::HUMAN) {
         int r, c;
         char letter;
         std::cout << player->get_name() << " enter row column letter: ";
         std::cin >> r >> c >> letter;
         return new WordTTT_Move(r, c, letter);
     }
-    else { //ai
+    else { // AI player
         
-        for (size_t i = 0; i < empty.size(); i++) { //put letter to win
+        // Strategy 1: Try to win by placing a letter that completes a valid word
+        for (size_t i = 0; i < empty.size(); i++) {
             int r = empty[i].first;
             int c = empty[i].second;
 
-            for (char l = 'a'; l <= 'z'; l++) { //bygrab mn a-z fe kol cells lw f harka tkseb
-                b->set_cell(r, c, l); //yehot el harf m2akat
-                if (b->is_win(player)) { //check lw htkaseb
-                    b->set_cell(r, c, '_'); //lw msh hyksb yrga3ha empty
+            for (char l = 'a'; l <= 'z'; l++) {
+                b->set_cell(r, c, l);
+                if (b->is_win(player)) {
+                    b->set_cell(r, c, '_');
                     std::cout << player->get_name() << " played (" << r << "," << c << ") letter: " << l << "\n";
                     return new WordTTT_Move(r, c, l);
                 }
@@ -141,9 +208,9 @@ Move<char>* WordTTT_UI::get_move(Player<char>* player) {
             }
         }
 
-        
+        // Strategy 2: Block opponent from winning
         Player<char>* opponent = nullptr; 
-        for (size_t i = 0; i < empty.size(); i++) { //lw el player hyksab yehawel ymna3o
+        for (size_t i = 0; i < empty.size(); i++) {
             int r = empty[i].first;
             int c = empty[i].second;
 
@@ -158,7 +225,7 @@ Move<char>* WordTTT_UI::get_move(Player<char>* player) {
             }
         }
 
-        
+        // Strategy 3: Choose a promising move that could lead to a valid word
         for (size_t i = 0; i < empty.size(); i++) {
             int r = empty[i].first;
             int c = empty[i].second;
@@ -195,7 +262,7 @@ Move<char>* WordTTT_UI::get_move(Player<char>* player) {
             }
         }
 
-        //lw mafesh harka smart yb2a ai cell fadya
+        // Strategy 4: Random fallback - pick a random empty cell and letter
         srand(time(NULL));
         size_t choice_index = rand() % empty.size();
         int r = empty[choice_index].first;
@@ -206,6 +273,13 @@ Move<char>* WordTTT_UI::get_move(Player<char>* player) {
     }
 }
 
+/**
+ * @brief Creates a player for the Word TTT game.
+ * @param name Reference to the player's name (filled via input if empty for humans).
+ * @param symbol The player's symbol (not used for word game).
+ * @param type The type of player (Human or AI).
+ * @return Pointer to the newly created Player object.
+ */
 Player<char>* WordTTT_UI::create_player(string& name, char symbol, PlayerType type) {
     if (type == PlayerType::HUMAN) {
         if (name.empty()) {

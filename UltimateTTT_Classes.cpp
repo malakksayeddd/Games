@@ -1,3 +1,13 @@
+/**
+ * @file UltimateTTT_Classes.cpp
+ * @brief Implementation of Ultimate Tic-Tac-Toe game classes.
+ *
+ * Ultimate TTT uses a 9x9 board divided into nine 3x3 sub-boards.
+ * Players compete to win sub-boards and then win 3 in a row on the main board.
+ * A unique mechanic: after a move, both players stay on the same sub-board until
+ * it's decided (won or drawn).
+ */
+
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
@@ -8,6 +18,12 @@ using namespace std;
 
 // ==================== Ultimate_Board Implementation ====================
 
+/**
+ * @brief Constructs an empty Ultimate board.
+ *
+ * Initializes the 9x9 grid (3x3 sub-boards, each 3x3 cells) to empty,
+ * and the main board tracking sub-board winners to open.
+ */
 Ultimate_Board::Ultimate_Board() : Board(9, 9), currentSubRow(-1), currentSubCol(-1) {
     for (int sr = 0; sr < 3; sr++)
         for (int sc = 0; sc < 3; sc++)
@@ -20,10 +36,27 @@ Ultimate_Board::Ultimate_Board() : Board(9, 9), currentSubRow(-1), currentSubCol
             mainBoard[i][j] = '.';
 }
 
+/**
+ * @brief Checks if three values match a symbol.
+ * @param a First value.
+ * @param b Second value.
+ * @param c Third value.
+ * @param sym Symbol to match.
+ * @return true if all three match the symbol, false otherwise.
+ */
 bool Ultimate_Board::check_three(char a, char b, char c, char sym) const {
     return (a == sym && b == sym && c == sym);
 }
 
+/**
+ * @brief Checks if a player has won a sub-board.
+ * @param sr Sub-board row index (0-2).
+ * @param sc Sub-board column index (0-2).
+ * @param sym The player's symbol ('X' or 'O').
+ * @return true if the player has three in a row in the sub-board, false otherwise.
+ *
+ * Checks all rows, columns, and both diagonals of the specified sub-board.
+ */
 bool Ultimate_Board::check_sub_winner(int sr, int sc, char sym) const {
     // Check rows
     for (int r = 0; r < 3; r++)
@@ -41,6 +74,12 @@ bool Ultimate_Board::check_sub_winner(int sr, int sc, char sym) const {
     return false;
 }
 
+/**
+ * @brief Checks if a sub-board is completely filled.
+ * @param sr Sub-board row index.
+ * @param sc Sub-board column index.
+ * @return true if all 9 cells are occupied, false otherwise.
+ */
 bool Ultimate_Board::is_sub_full(int sr, int sc) const {
     for (int r = 0; r < 3; r++)
         for (int c = 0; c < 3; c++)
@@ -49,6 +88,20 @@ bool Ultimate_Board::is_sub_full(int sr, int sc) const {
     return true;
 }
 
+/**
+ * @brief Updates the board with a player's move.
+ * @param move Pointer to the move (9x9 coordinates mapped to sub-board/cell).
+ * @return true if the move is valid and applied, false otherwise.
+ *
+ * Validates:
+ * - Coordinates are within bounds
+ * - Move is in the current active sub-board (or any open if free choice)
+ * - Sub-board is not already won/drawn
+ * - Cell is empty
+ *
+ * After a successful move, checks if the sub-board is won or drawn,
+ * and updates the main board accordingly.
+ */
 bool Ultimate_Board::update_board(Move<char>* move) {
     int x = move->get_x();
     int y = move->get_y();
@@ -84,6 +137,13 @@ bool Ultimate_Board::update_board(Move<char>* move) {
     return true;
 }
 
+/**
+ * @brief Checks if the player has won the main game.
+ * @param player Pointer to the player to check.
+ * @return true if the player has 3 sub-boards in a row, false otherwise.
+ *
+ * Checks rows, columns, and diagonals on the main 3x3 meta-board.
+ */
 bool Ultimate_Board::is_win(Player<char>* player) {
     char sym = player->get_symbol();
     // Check main board for 3 in a row
@@ -100,6 +160,11 @@ bool Ultimate_Board::is_win(Player<char>* player) {
     return false;
 }
 
+/**
+ * @brief Checks if the game is a draw.
+ * @param player Pointer to the player to check against.
+ * @return true if all sub-boards completed with no winner, false otherwise.
+ */
 bool Ultimate_Board::is_draw(Player<char>* player) {
     // Draw if all sub-boards are completed and no winner
     for (int r = 0; r < 3; r++)
@@ -109,14 +174,32 @@ bool Ultimate_Board::is_draw(Player<char>* player) {
     return !is_win(player);
 }
 
+/**
+ * @brief Checks if the game is over.
+ * @param player Pointer to the player to evaluate.
+ * @return true if there's a winner or draw, false otherwise.
+ */
 bool Ultimate_Board::game_is_over(Player<char>* player) {
     return is_win(player) || is_draw(player);
 }
 
 // ==================== Ultimate_UI Implementation ====================
 
+/**
+ * @brief Constructs the Ultimate Tic-Tac-Toe UI.
+ *
+ * Initializes the title and sets up the display.
+ */
 Ultimate_UI::Ultimate_UI() : UI<char>("=== ULTIMATE TIC-TAC-TOE ===", 1), boardPtr(nullptr) {}
 
+/**
+ * @brief Displays the main board and current sub-board side by side.
+ *
+ * Shows:
+ * - The 3x3 main board showing sub-board winners ('X', 'O', '-' for draw, empty if open)
+ * - The current active sub-board (if one is selected)
+ * - Instructions for where the player can move
+ */
 void Ultimate_UI::display_board() const {
     if (!boardPtr) return;
     
@@ -170,6 +253,15 @@ void Ultimate_UI::display_board() const {
     cout << "\n";
 }
 
+/**
+ * @brief Gets a move from the player.
+ * @param player Pointer to the current player.
+ * @return Pointer to a Move object with 9x9 coordinates.
+ *
+ * For computer players: randomly selects a valid sub-board and cell.
+ * For human players: prompts for sub-board selection (if free choice)
+ * and then cell selection within the active sub-board.
+ */
 Move<char>* Ultimate_UI::get_move(Player<char>* player) {
     display_board();
     
@@ -214,6 +306,12 @@ Move<char>* Ultimate_UI::get_move(Player<char>* player) {
     return new Move<char>(sr * 3 + cr, sc * 3 + cc, player->get_symbol());
 }
 
+/**
+ * @brief Launches the Ultimate Tic-Tac-Toe game.
+ *
+ * Displays the rules, creates the board, sets up players,
+ * and runs the game loop until completion.
+ */
 void Ultimate_UI::launch() {
     srand(static_cast<unsigned int>(time(0)));
     

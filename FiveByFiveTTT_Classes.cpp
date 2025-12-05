@@ -1,3 +1,11 @@
+/**
+ * @file FiveByFiveTTT_Classes.cpp
+ * @brief Implementation of the 5x5 Tic-Tac-Toe game classes.
+ *
+ * Contains the implementation of FiveByFive_Board and FiveByFive_UI,
+ * including AI logic using the Minimax algorithm with alpha-beta pruning.
+ */
+
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
@@ -8,12 +16,20 @@ using namespace std;
 
 // ================== FiveByFive_Board Implementation ==================
 
+/**
+ * @brief Constructs a 5x5 board with all cells initialized to blank.
+ */
 FiveByFive_Board::FiveByFive_Board() : Board<char>(5, 5) {
     for (auto& row : board)
         for (auto& cell : row)
             cell = blank_symbol;
 }
 
+/**
+ * @brief Updates the board with a player's move.
+ * @param move Pointer to the move containing coordinates and symbol.
+ * @return true if the move was valid and applied, false otherwise.
+ */
 bool FiveByFive_Board::update_board(Move<char>* move) {
     int x = move->get_x();
     int y = move->get_y();
@@ -29,6 +45,14 @@ bool FiveByFive_Board::update_board(Move<char>* move) {
     return true;
 }
 
+/**
+ * @brief Counts all three-in-a-row sequences for a given symbol.
+ * 
+ * Checks horizontal, vertical, and both diagonal directions.
+ * 
+ * @param sym The symbol to count sequences for ('X' or 'O').
+ * @return The total number of three-in-a-row sequences.
+ */
 int FiveByFive_Board::count_three_in_a_row(char sym) const {
     int count = 0;
 
@@ -59,10 +83,23 @@ int FiveByFive_Board::count_three_in_a_row(char sym) const {
     return count;
 }
 
+/**
+ * @brief Checks if the game is over.
+ * @param player Pointer to the current player.
+ * @return true if 24 moves have been made (1 cell remaining).
+ */
 bool FiveByFive_Board::game_is_over(Player<char>* player) {
     return n_moves >= 24;  // Game ends when only 1 square remains
 }
 
+/**
+ * @brief Determines if the player has won.
+ * 
+ * The player wins if they have more three-in-a-row sequences than the opponent.
+ * 
+ * @param player Pointer to the player to check.
+ * @return true if the player has more sequences, false otherwise.
+ */
 bool FiveByFive_Board::is_win(Player<char>* player) {
     if (!game_is_over(player)) return false;
     
@@ -72,6 +109,14 @@ bool FiveByFive_Board::is_win(Player<char>* player) {
     return (player->get_symbol() == 'X') ? (x_score > o_score) : (o_score > x_score);
 }
 
+/**
+ * @brief Determines if the player has lost.
+ * 
+ * The player loses if the opponent has more three-in-a-row sequences.
+ * 
+ * @param player Pointer to the player to check.
+ * @return true if the player has fewer sequences, false otherwise.
+ */
 bool FiveByFive_Board::is_lose(Player<char>* player) {
     if (!game_is_over(player)) return false;
     
@@ -81,6 +126,11 @@ bool FiveByFive_Board::is_lose(Player<char>* player) {
     return (player->get_symbol() == 'X') ? (o_score > x_score) : (x_score > o_score);
 }
 
+/**
+ * @brief Checks if the game ended in a draw.
+ * @param player Pointer to the current player.
+ * @return true if both players have equal sequences, false otherwise.
+ */
 bool FiveByFive_Board::is_draw(Player<char>* player) {
     if (!game_is_over(player)) return false;
     return count_three_in_a_row('X') == count_three_in_a_row('O');
@@ -89,10 +139,26 @@ bool FiveByFive_Board::is_draw(Player<char>* player) {
 
 // ================== FiveByFive_UI Implementation ==================
 
+/**
+ * @brief Constructs the 5x5 Tic-Tac-Toe UI.
+ */
 FiveByFive_UI::FiveByFive_UI() : UI<char>(3), boardPtr(nullptr) {}
 
 // ================== AI Functions ==================
 
+/**
+ * @brief Evaluates a triplet of cells for AI scoring.
+ * 
+ * Used by the minimax algorithm to evaluate potential three-in-a-row sequences.
+ * 
+ * @param a First cell value.
+ * @param b Second cell value.
+ * @param c Third cell value.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @param blank Empty cell symbol.
+ * @return Score value for the triplet.
+ */
 static int eval3(char a, char b, char c, char ai, char human, char blank) {
     int aiCount = 0, huCount = 0, emptyCount = 0;
     
@@ -118,6 +184,16 @@ static int eval3(char a, char b, char c, char ai, char human, char blank) {
     return 0;
 }
 
+/**
+ * @brief Evaluates the entire board state for the AI.
+ * 
+ * Sums up scores from all possible three-in-a-row positions.
+ * 
+ * @param b Pointer to the game board.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @return Total evaluation score for the board state.
+ */
 static int evaluateBoard(FiveByFive_Board* b, char ai, char human) {
     int score = 0;
     const auto& board = b->get_board_matrix();
@@ -143,6 +219,20 @@ static int evaluateBoard(FiveByFive_Board* b, char ai, char human) {
     return score;
 }
 
+/**
+ * @brief Minimax algorithm with alpha-beta pruning for AI decision making.
+ * 
+ * Recursively evaluates all possible moves to find the optimal play.
+ * 
+ * @param b Pointer to the game board.
+ * @param depth Current search depth.
+ * @param isMax Whether this is a maximizing player's turn.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @param alpha Alpha value for pruning.
+ * @param beta Beta value for pruning.
+ * @return The best score achievable from this position.
+ */
 static int minimax(FiveByFive_Board* b, int depth, bool isMax, char ai, char human, int alpha, int beta) {
     if (depth == 0 || b->get_n_moves() >= 24) {
         return evaluateBoard(b, ai, human);
@@ -189,6 +279,15 @@ static int minimax(FiveByFive_Board* b, int depth, bool isMax, char ai, char hum
     }
 }
 
+/**
+ * @brief Finds the best move for the AI using minimax.
+ * 
+ * @param b Pointer to the game board.
+ * @param ai AI player's symbol.
+ * @param human Human player's symbol.
+ * @param depth Search depth (default: 4).
+ * @return Pair of (row, column) for the best move.
+ */
 static pair<int, int> findBestMove(FiveByFive_Board* b, char ai, char human, int depth = 4) {
     int bestScore = INT_MIN;
     int bestR = 0, bestC = 0;
@@ -236,6 +335,10 @@ Move<char>* FiveByFive_UI::get_move(Player<char>* player) {
     return new Move<char>(x, y, player->get_symbol());
 }
 
+/**
+ * @brief Displays the board matrix with current scores.
+ * @param matrix The board matrix to display.
+ */
 void FiveByFive_UI::display_board_matrix(const vector<vector<char>>& matrix) const {
     UI<char>::display_board_matrix(matrix);
     
@@ -246,6 +349,11 @@ void FiveByFive_UI::display_board_matrix(const vector<vector<char>>& matrix) con
     }
 }
 
+/**
+ * @brief Launches the 5x5 Tic-Tac-Toe game.
+ * 
+ * Sets up the game board, creates players, and runs the game loop.
+ */
 void FiveByFive_UI::launch() {
     cout << "\nWelcome to 5x5 Tic-Tac-Toe!\n";
     cout << "Rules:\n";

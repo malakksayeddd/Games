@@ -1,3 +1,11 @@
+/**
+ * @file MenuManager.cpp
+ * @brief Implementation of the game menu management system.
+ *
+ * Provides a central menu interface for launching all available
+ * board game variants in the MiniBoards collection.
+ */
+
 #include "MenuManager.h"
 #include <iostream>
 #include <limits>
@@ -14,11 +22,22 @@
 #include "UltimateTTT_Classes.h"
 using namespace std;
 
+/**
+ * @brief Constructs the MenuManager and initializes the game list.
+ *
+ * Sets up the list of available games and seeds the random number generator.
+ */
 MenuManager::MenuManager() {
     games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Ultimate Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
+/**
+ * @brief Main loop for the menu system.
+ *
+ * Displays the menu and processes user selections until exit is chosen.
+ * Routes to the appropriate game launcher based on user choice.
+ */
 void MenuManager::run() {
     while (true) {
         display_menu();
@@ -83,6 +102,11 @@ void MenuManager::run() {
     }
 }
 
+/**
+ * @brief Displays the main menu with all available games.
+ *
+ * Prints a numbered list of all game options.
+ */
 void MenuManager::display_menu() {
     cout << "\n The Game Menu\n";
     for (size_t i = 0; i < games.size(); ++i) {
@@ -91,6 +115,10 @@ void MenuManager::display_menu() {
     cout << "Select a game: ";
 }
 
+/**
+ * @brief Gets the user's menu choice.
+ * @return The integer choice entered by the user.
+ */
 int MenuManager::get_choice() {
     int choice;
     cin >> choice;
@@ -99,6 +127,12 @@ int MenuManager::get_choice() {
 }
 
 // ---------------- XO Game ----------------
+
+/**
+ * @brief Launches the classic Tic-Tac-Toe (X-O) game.
+ *
+ * Creates the board, UI, and players, then runs the game loop.
+ */
 void MenuManager::run_xo_game() {
     UI<char>* game_ui = new XO_UI();
     Board<char>* xo_board = new X_O_Board();
@@ -114,6 +148,13 @@ void MenuManager::run_xo_game() {
 }
 
 // ---------------- Numerical Tic-Tac-Toe ----------------
+
+/**
+ * @brief Launches the Numerical Tic-Tac-Toe game.
+ *
+ * Player 1 uses odd numbers (1,3,5,7,9), Player 2 uses even (2,4,6,8).
+ * Goal is to make a line summing to 15.
+ */
 void MenuManager::run_numerical_ttt() {
     cout << "\nWelcome to the Numerical Tic-Tac-Toe\n";
     cout << "How to play it:\n";
@@ -134,7 +175,14 @@ void MenuManager::run_numerical_ttt() {
     delete[] players;
 }
 
-// SUS Game 
+// ---------------- SUS Game ----------------
+
+/**
+ * @brief Launches the SUS game.
+ *
+ * Players take turns placing 'S' or 'U' and score points for each
+ * "SUS" sequence formed. Supports human vs human or human vs AI.
+ */
 void MenuManager::run_sus_game() {
     int choice;
     cout << "\n1- Vs Human\n2- Vs AI\n";
@@ -161,6 +209,13 @@ void MenuManager::run_sus_game() {
 }
 
 // ---------------- Four-in-a-Row ----------------
+
+/**
+ * @brief Launches the Four-in-a-Row (Connect Four) game.
+ *
+ * Played on a 6x7 board where pieces fall with gravity.
+ * First to get 4 in a line wins.
+ */
 void MenuManager::run_four_in_a_row() {
     cout << "\nWelcome to Four-in-a-Row!\n";
     cout << "Instructions:\n";
@@ -183,10 +238,14 @@ void MenuManager::run_four_in_a_row() {
     
 }
 
-
 // ---------------- Misère Tic-Tac-Toe ----------------
+
+/**
+ * @brief Launches the Misère (Inverse) Tic-Tac-Toe game.
+ *
+ * The player who gets 3 in a row LOSES instead of winning.
+ */
 void MenuManager::run_misere_ttt() {
-    // We use the standalone MisereGame class (MisereTTT_Classes.*)
     string p1, p2;
     cout << "Enter Player 1 name (X): ";
     cin >> p1;
@@ -199,6 +258,12 @@ void MenuManager::run_misere_ttt() {
 
 // ---------------- Infinity TTT ----------------
 
+/**
+ * @brief Launches the Infinity Tic-Tac-Toe game.
+ *
+ * Each player can only have 3 marks on the board at a time.
+ * When placing a 4th mark, the oldest mark is automatically removed.
+ */
 void MenuManager::run_infinity_ttt()
 {
     cout << "\n=== Infinity Tic Tac Toe ===\n";
@@ -262,12 +327,28 @@ void MenuManager::run_infinity_ttt()
 }
 
 // ---------------- Obstacles TTT ----------------
+
+/**
+ * @brief Launches the Obstacles Tic-Tac-Toe game.
+ *
+ * Played on a 6x6 board with random obstacles placed.
+ * First to get 3 in a row wins.
+ */
 void MenuManager::run_obstacles_ttt() {
     Obstacles_UI* game_ui = new Obstacles_UI();
     game_ui->launch();
     delete game_ui;
 }
+
 // ---------------- 4x4 Tic Tac Toe ----------------
+
+/**
+ * @brief Launches the 4x4 Tic-Tac-Toe game.
+ *
+ * Each player has 4 movable tokens. Players can only move tokens
+ * to adjacent empty squares (no diagonal movement or jumping).
+ * First to align 3 tokens wins.
+ */
 void MenuManager::run_four_by_four() {
     cout << "\nWelcome to 4x4 Tic Tac Toe!\n";
     cout << "Rules:\n";
@@ -291,12 +372,27 @@ void MenuManager::run_four_by_four() {
 }
 
 // ---------------- 5x5 Tic Tac Toe ----------------
+
+/**
+ * @brief Launches the 5x5 Tic-Tac-Toe game.
+ *
+ * Played on a 5x5 board. The winner is determined by who has the
+ * most three-in-a-row sequences when the board is full.
+ */
 void MenuManager::run_five_by_five() {
     FiveByFive_UI* game_ui = new FiveByFive_UI();
     game_ui->launch();
     delete game_ui;
 }
-//----------------Word tic tac toe--------------
+
+// ---------------- Word Tic Tac Toe ----------------
+
+/**
+ * @brief Launches the Word Tic-Tac-Toe game.
+ *
+ * Players place letters from A-Z on a 3x3 board.
+ * Win by forming a valid 3-letter English word in any row, column, or diagonal.
+ */
 void MenuManager::run_word_ttt() {
     WordTTT_Board board;
     WordTTT_UI ui;
@@ -336,7 +432,14 @@ void MenuManager::run_word_ttt() {
     delete players[1];
 }
 
-//------------------------Pyramid Tic-Tac-Toe------------------------
+// ---------------- Pyramid Tic-Tac-Toe ----------------
+
+/**
+ * @brief Launches the Pyramid Tic-Tac-Toe game.
+ *
+ * Played on a pyramid-shaped board (1 cell top row, 3 middle, 5 bottom).
+ * First to get 3 in a row wins.
+ */
 void MenuManager::run_pyramid() {
     UI<char>* ui = new Pyramid_UI();
     Board<char>* b = new Pyramid_Board();
@@ -353,6 +456,13 @@ void MenuManager::run_pyramid() {
 }
 
 // ---------------- Ultimate Tic-Tac-Toe ----------------
+
+/**
+ * @brief Launches the Ultimate Tic-Tac-Toe game.
+ *
+ * Played on a 9x9 board divided into nine 3x3 sub-boards.
+ * Win sub-boards to claim them, then get 3 sub-boards in a row to win.
+ */
 void MenuManager::run_ultimate_ttt() {
     Ultimate_UI* game_ui = new Ultimate_UI();
     game_ui->launch();

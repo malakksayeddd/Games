@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['ui_0',['UI',['../class_u_i.html',1,'UI&lt; T &gt;'],['../class_u_i.html#afb59b53f3c2ed750b1a9a0c7d6dc4a7a',1,'UI::UI(int cell_display_width=3)'],['../class_u_i.html#ae50eed41905ca2f8dc103d9bef427fe6',1,'UI::UI(string message, int cell_display_width)']]],
+  ['ui_3c_20char_20_3e_1',['UI&lt; char &gt;',['../class_u_i.html',1,'']]],
+  ['ui_3c_20int_20_3e_2',['UI&lt; int &gt;',['../class_u_i.html',1,'']]],
+  ['ultimate_5fboard_3',['Ultimate_Board',['../class_ultimate___board.html',1,'Ultimate_Board'],['../class_ultimate___board.html#a7217969045637563ae6d47d492a31fa9',1,'Ultimate_Board::Ultimate_Board()']]],
+  ['ultimate_5fui_4',['Ultimate_UI',['../class_ultimate___u_i.html',1,'Ultimate_UI'],['../class_ultimate___u_i.html#a9e3b3b9207e382ffc43d8e34bcb34ce0',1,'Ultimate_UI::Ultimate_UI()']]],
+  ['ultimatettt_5fclasses_2ecpp_5',['UltimateTTT_Classes.cpp',['../_ultimate_t_t_t___classes_8cpp.html',1,'']]],
+  ['ultimatettt_5fclasses_2eh_6',['UltimateTTT_Classes.h',['../_ultimate_t_t_t___classes_8h.html',1,'']]],
+  ['undo_7',['undo',['../class_s_u_s___board.html#ae03094f47e1fb84c1d09d739fb4870da',1,'SUS_Board']]],
+  ['update_5fboard_8',['update_board',['../class_board.html#a93d9dec601dda58b7e206ccb47633e57',1,'Board::update_board()'],['../class_five_by_five___board.html#aad484568d9828dd29ac172fe9b708a5c',1,'FiveByFive_Board::update_board()'],['../class_four_by_four___board.html#a508243332946c24d2e4be9154e4d3315',1,'FourByFour_Board::update_board()'],['../class_four_in_a_row___board.html#a13a520844965656953fb0776b5295283',1,'FourInARow_Board::update_board()'],['../class_infinity___board.html#a73168748decfd8a3bfa9044409d728aa',1,'Infinity_Board::update_board()'],['../class_memory_t_t_t___board.html#a15641445470e280b797ef51003150378',1,'MemoryTTT_Board::update_board()'],['../class_numerical___board.html#aec925385aaf0b4cafb115c3e7564e1f3',1,'Numerical_Board::update_board()'],['../class_obstacles___board.html#a51f3c83c61219c03b6c66231448b93b8',1,'Obstacles_Board::update_board()'],['../class_pyramid___board.html#aa0ad0f91ee884d0a497e233ce4f68c65',1,'Pyramid_Board::update_board()'],['../class_s_u_s___board.html#a22679cdc9a91a17fea898c66ad821e45',1,'SUS_Board::update_board()'],['../class_ultimate___board.html#a9339ec67859e01c726adf55a8a77db72',1,'Ultimate_Board::update_board()'],['../class_word_t_t_t___board.html#ad3f52f9545d9430993d87e6165757c3c',1,'WordTTT_Board::update_board()'],['../class_x___o___board.html#aef2b0da670b2d5dc6333e0e0113f8b3d',1,'X_O_Board::update_board()']]]
+];

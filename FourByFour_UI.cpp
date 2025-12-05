@@ -1,17 +1,41 @@
+/**
+ * @file FourByFour_UI.cpp
+ * @brief Implementation of the User Interface for 4x4 Tic-Tac-Toe.
+ */
+
 #include "FourByFour_UI.h"
 #include <iostream>
 
 using namespace std;
 
+/**
+ * @brief Constructs the 4x4 Tic-Tac-Toe UI.
+ */
 FourByFour_UI::FourByFour_UI()
     : UI("Welcome to 4x4 Tic-Tac-Toe!", 3)
 {}
 
+/**
+ * @brief Creates a player with the specified name, symbol, and type.
+ * @param name Name of the player.
+ * @param symbol The player's symbol ('X' or 'O').
+ * @param t The type of player (Human or Computer).
+ * @return Pointer to the newly created Player object.
+ */
 Player<char>* FourByFour_UI::create_player(string& name, char symbol, PlayerType t) {
     cout << "Creating player " << name << " (" << symbol << ")\n";
     return new Player<char>(name, symbol, t);
 }
 
+/**
+ * @brief Gets a move from the player.
+ * 
+ * For computer players, uses the AI to find the optimal move.
+ * For human players, prompts for source and destination coordinates.
+ * 
+ * @param player Pointer to the current player.
+ * @return Pointer to the Move object containing move information.
+ */
 Move<char>* FourByFour_UI::get_move(Player<char>* player) {
 
     cout << player->get_name() << " (" << player->get_symbol() << ") move\n";
