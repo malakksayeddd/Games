@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['x_5fo_5fboard_0',['X_O_Board',['../class_x___o___board.html',1,'']]],
-  ['xo_5fui_1',['XO_UI',['../class_x_o___u_i.html',1,'']]]
+  ['wordttt_5fboard_0',['WordTTT_Board',['../class_word_t_t_t___board.html',1,'']]],
+  ['wordttt_5fmove_1',['WordTTT_Move',['../class_word_t_t_t___move.html',1,'']]],
+  ['wordttt_5fui_2',['WordTTT_UI',['../class_word_t_t_t___u_i.html',1,'']]]
 ];

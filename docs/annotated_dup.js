@@ -1,10 +1,12 @@
 var annotated_dup =
 [
     [ "Board", "class_board.html", "class_board" ],
+    [ "DiamondTTT", "class_diamond_t_t_t.html", "class_diamond_t_t_t" ],
     [ "FiveByFive_Board", "class_five_by_five___board.html", "class_five_by_five___board" ],
     [ "FiveByFive_UI", "class_five_by_five___u_i.html", "class_five_by_five___u_i" ],
     [ "FourByFour_AI", "class_four_by_four___a_i.html", "class_four_by_four___a_i" ],
     [ "FourByFour_Board", "class_four_by_four___board.html", "class_four_by_four___board" ],
+    [ "FourByFour_Move", "class_four_by_four___move.html", "class_four_by_four___move" ],
     [ "FourByFour_UI", "class_four_by_four___u_i.html", "class_four_by_four___u_i" ],
     [ "FourInARow_Board", "class_four_in_a_row___board.html", "class_four_in_a_row___board" ],
     [ "FourInARow_UI", "class_four_in_a_row___u_i.html", "class_four_in_a_row___u_i" ],

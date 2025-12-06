@@ -112,7 +112,7 @@ $(function(){initNavTree('_menu_manager_8h_source.html','',''); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;<a class="code" href="_word_t_t_t___classes_8h.html">WordTTT_Classes.h</a>&quot;</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;<a class="code" href="_pyramid_t_t_t___classes_8h.html">PyramidTTT_Classes.h</a>&quot;</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;<a class="code" href="_ultimate_t_t_t___classes_8h.html">UltimateTTT_Classes.h</a>&quot;</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &quot;DiamondTTT.h&quot;</span></div>
 <div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="class_menu_manager.html">   36</a></span><span class="keyword">class </span><a class="code hl_function" href="class_menu_manager.html#a1534958928e1e97c949d17ee32ff4369">MenuManager</a> {</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">public</span>:</div>
@@ -149,11 +149,12 @@ $(function(){initNavTree('_menu_manager_8h_source.html','',''); });
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> run_ultimate_ttt();</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">int</span> get_choice();</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>};</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">void</span> run_DiamondTTT();</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">int</span> get_choice();</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>};</div>
 </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_five_by_five_t_t_t___classes_8h_html"><div class="ttname"><a href="_five_by_five_t_t_t___classes_8h.html">FiveByFiveTTT_Classes.h</a></div><div class="ttdoc">Defines the 5x5 Tic-Tac-Toe game classes.</div></div>
 <div class="ttc" id="a_four_by_four___board_8h_html"><div class="ttname"><a href="_four_by_four___board_8h.html">FourByFour_Board.h</a></div><div class="ttdoc">Defines the 4x4 Tic-Tac-Toe board class.</div></div>
 <div class="ttc" id="a_four_by_four___u_i_8h_html"><div class="ttname"><a href="_four_by_four___u_i_8h.html">FourByFour_UI.h</a></div><div class="ttdoc">Defines the User Interface for 4x4 Tic-Tac-Toe.</div></div>
@@ -167,8 +168,8 @@ $(function(){initNavTree('_menu_manager_8h_source.html','',''); });
 <div class="ttc" id="a_ultimate_t_t_t___classes_8h_html"><div class="ttname"><a href="_ultimate_t_t_t___classes_8h.html">UltimateTTT_Classes.h</a></div><div class="ttdoc">Defines the Ultimate Tic-Tac-Toe game classes.</div></div>
 <div class="ttc" id="a_word_t_t_t___classes_8h_html"><div class="ttname"><a href="_word_t_t_t___classes_8h.html">WordTTT_Classes.h</a></div><div class="ttdoc">Defines Word Tic-Tac-Toe game classes.</div></div>
 <div class="ttc" id="a_x_o___classes_8h_html"><div class="ttname"><a href="_x_o___classes_8h.html">XO_Classes.h</a></div><div class="ttdoc">Defines the X-O (Tic-Tac-Toe) specific classes that extend the generic board game framework.</div></div>
-<div class="ttc" id="aclass_menu_manager_html_a1534958928e1e97c949d17ee32ff4369"><div class="ttname"><a href="class_menu_manager.html#a1534958928e1e97c949d17ee32ff4369">MenuManager::MenuManager</a></div><div class="ttdeci">MenuManager()</div><div class="ttdoc">Constructs the MenuManager with available games.</div><div class="ttdef"><b>Definition</b> MenuManager.cpp:30</div></div>
-<div class="ttc" id="aclass_menu_manager_html_aaa37cf39efc7db5a3ef340bb18389cda"><div class="ttname"><a href="class_menu_manager.html#aaa37cf39efc7db5a3ef340bb18389cda">MenuManager::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Runs the main menu loop.</div><div class="ttdef"><b>Definition</b> MenuManager.cpp:41</div></div>
+<div class="ttc" id="aclass_menu_manager_html_a1534958928e1e97c949d17ee32ff4369"><div class="ttname"><a href="class_menu_manager.html#a1534958928e1e97c949d17ee32ff4369">MenuManager::MenuManager</a></div><div class="ttdeci">MenuManager()</div><div class="ttdoc">Constructs the MenuManager with available games.</div><div class="ttdef"><b>Definition</b> MenuManager.cpp:31</div></div>
+<div class="ttc" id="aclass_menu_manager_html_aaa37cf39efc7db5a3ef340bb18389cda"><div class="ttname"><a href="class_menu_manager.html#aaa37cf39efc7db5a3ef340bb18389cda">MenuManager::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Runs the main menu loop.</div><div class="ttdef"><b>Definition</b> MenuManager.cpp:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

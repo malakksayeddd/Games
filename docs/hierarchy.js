@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "Board&lt; T &gt;", "class_board.html", null ],
     [ "Board&lt; char &gt;", "class_board.html", [
+      [ "DiamondTTT", "class_diamond_t_t_t.html", null ],
       [ "FiveByFive_Board", "class_five_by_five___board.html", null ],
       [ "FourByFour_Board", "class_four_by_four___board.html", null ],
       [ "FourInARow_Board", "class_four_in_a_row___board.html", null ],
@@ -24,6 +25,7 @@ var hierarchy =
     [ "MisereGame", "class_misere_game.html", null ],
     [ "Move&lt; T &gt;", "class_move.html", null ],
     [ "Move&lt; char &gt;", "class_move.html", [
+      [ "FourByFour_Move", "class_four_by_four___move.html", null ],
       [ "WordTTT_Move", "class_word_t_t_t___move.html", null ]
     ] ],
     [ "Player&lt; T &gt;", "class_player.html", null ],

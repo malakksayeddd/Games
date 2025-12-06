@@ -1,6 +1,7 @@
 var files_dup =
 [
     [ "BoardGame_Classes.h", "_board_game___classes_8h_source.html", null ],
+    [ "DiamondTTT.h", "_diamond_t_t_t_8h_source.html", null ],
     [ "FiveByFiveTTT_Classes.cpp", "_five_by_five_t_t_t___classes_8cpp.html", null ],
     [ "FiveByFiveTTT_Classes.h", "_five_by_five_t_t_t___classes_8h.html", "_five_by_five_t_t_t___classes_8h" ],
     [ "FourByFour_AI.cpp", "_four_by_four___a_i_8cpp.html", null ],

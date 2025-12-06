@@ -17,6 +17,7 @@ A collection of Tic-Tac-Toe variant board games with AI opponents.
 - **Pyramid TTT** - Pyramid-shaped board
 - **Ultimate TTT** - 9x9 with nested 3x3 sub-boards
 - **Memory TTT** - Hidden board variant
+- **Diamond TTT** - Diamond-shaped TicTacToe game
 
 ## Features
 

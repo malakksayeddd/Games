@@ -11,12 +11,13 @@ var searchData=
   ['fourbyfour_5fboard_8',['FourByFour_Board',['../class_four_by_four___board.html',1,'FourByFour_Board'],['../class_four_by_four___board.html#afde0140f7c36fc611390b96b68769e58',1,'FourByFour_Board::FourByFour_Board()']]],
   ['fourbyfour_5fboard_2ecpp_9',['FourByFour_Board.cpp',['../_four_by_four___board_8cpp.html',1,'']]],
   ['fourbyfour_5fboard_2eh_10',['FourByFour_Board.h',['../_four_by_four___board_8h.html',1,'']]],
-  ['fourbyfour_5fui_11',['FourByFour_UI',['../class_four_by_four___u_i.html',1,'FourByFour_UI'],['../class_four_by_four___u_i.html#a018d318e6c0445d749ddf611a5219e5f',1,'FourByFour_UI::FourByFour_UI()']]],
-  ['fourbyfour_5fui_2ecpp_12',['FourByFour_UI.cpp',['../_four_by_four___u_i_8cpp.html',1,'']]],
-  ['fourbyfour_5fui_2eh_13',['FourByFour_UI.h',['../_four_by_four___u_i_8h.html',1,'']]],
-  ['fourinarow_5fboard_14',['FourInARow_Board',['../class_four_in_a_row___board.html',1,'FourInARow_Board'],['../class_four_in_a_row___board.html#a040335dcb9bcb429e79bffc70b413464',1,'FourInARow_Board::FourInARow_Board()']]],
-  ['fourinarow_5fclasses_2ecpp_15',['FourInARow_Classes.cpp',['../_four_in_a_row___classes_8cpp.html',1,'']]],
-  ['fourinarow_5fclasses_2eh_16',['FourInARow_Classes.h',['../_four_in_a_row___classes_8h.html',1,'']]],
-  ['fourinarow_5fui_17',['FourInARow_UI',['../class_four_in_a_row___u_i.html',1,'FourInARow_UI'],['../class_four_in_a_row___u_i.html#a0df3229797f7af08cdbd3b7ba15d2354',1,'FourInARow_UI::FourInARow_UI()']]],
-  ['full_18',['full',['../class_s_u_s___board.html#a41bcefe127af7ec0e51ac026f25c9ef9',1,'SUS_Board']]]
+  ['fourbyfour_5fmove_11',['FourByFour_Move',['../class_four_by_four___move.html',1,'FourByFour_Move'],['../class_four_by_four___move.html#a8bd596108ca4a3376f32ff229314e1e3',1,'FourByFour_Move::FourByFour_Move()']]],
+  ['fourbyfour_5fui_12',['FourByFour_UI',['../class_four_by_four___u_i.html',1,'FourByFour_UI'],['../class_four_by_four___u_i.html#a018d318e6c0445d749ddf611a5219e5f',1,'FourByFour_UI::FourByFour_UI()']]],
+  ['fourbyfour_5fui_2ecpp_13',['FourByFour_UI.cpp',['../_four_by_four___u_i_8cpp.html',1,'']]],
+  ['fourbyfour_5fui_2eh_14',['FourByFour_UI.h',['../_four_by_four___u_i_8h.html',1,'']]],
+  ['fourinarow_5fboard_15',['FourInARow_Board',['../class_four_in_a_row___board.html',1,'FourInARow_Board'],['../class_four_in_a_row___board.html#a040335dcb9bcb429e79bffc70b413464',1,'FourInARow_Board::FourInARow_Board()']]],
+  ['fourinarow_5fclasses_2ecpp_16',['FourInARow_Classes.cpp',['../_four_in_a_row___classes_8cpp.html',1,'']]],
+  ['fourinarow_5fclasses_2eh_17',['FourInARow_Classes.h',['../_four_in_a_row___classes_8h.html',1,'']]],
+  ['fourinarow_5fui_18',['FourInARow_UI',['../class_four_in_a_row___u_i.html',1,'FourInARow_UI'],['../class_four_in_a_row___u_i.html#a0df3229797f7af08cdbd3b7ba15d2354',1,'FourInARow_UI::FourInARow_UI()']]],
+  ['full_19',['full',['../class_s_u_s___board.html#a41bcefe127af7ec0e51ac026f25c9ef9',1,'SUS_Board']]]
 ];
