@@ -20,6 +20,7 @@
 #include "FiveByFiveTTT_Classes.h"
 #include "WordTTT_Classes.h"
 #include "UltimateTTT_Classes.h"
+#include "DiamondTTT.h"
 using namespace std;
 
 /**
@@ -28,7 +29,9 @@ using namespace std;
  * Sets up the list of available games and seeds the random number generator.
  */
 MenuManager::MenuManager() {
-    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)", "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Ultimate Tic-Tac-Toe", "Exit" };
+    games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)"
+        , "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Ultimate Tic-Tac-Toe",
+        "Diamond Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -92,7 +95,12 @@ void MenuManager::run() {
             cout << "\n Running Ultimate Tic-Tac-Toe...\n";
             run_ultimate_ttt();
         }
-        else if (choice == 13) {
+            else if (choice == 13) { 
+    cout << "\n Running Diamond Tic-Tac-Toe...\n";
+    run_DiamondTTT() ;
+    
+}
+        else if (choice == 14) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
@@ -468,3 +476,16 @@ void MenuManager::run_ultimate_ttt() {
     game_ui->launch();
     delete game_ui;
 }
+    //----------------Diamond----------------
+void MenuManager::run_DiamondTTT()
+{ string x, p2;
+    cout << "Enter Player 1 name (X): ";
+    cin >> x;
+    cout << "Enter Player 2 name (O): ";
+    cin >> p2;
+
+    DiamondTTT g;
+    g.play();
+}
+
+
