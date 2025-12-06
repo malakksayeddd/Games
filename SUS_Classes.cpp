@@ -155,7 +155,7 @@ bool SUS_Board::is_draw(Player<char>* p) {
  * @return true if the board is full.
  */
 bool SUS_Board::game_is_over(Player<char>* p) {
-    return full;
+    return full();
 }
 
 // ==================== SUS_Game Implementation ====================

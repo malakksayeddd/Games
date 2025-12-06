@@ -9,7 +9,7 @@
 #ifndef FOURBYFOUR_UI_H
 #define FOURBYFOUR_UI_H
 
-#include "../BoardGame_Classes.h"
+#include "BoardGame_Classes.h"
 
 /**
  * @class FourByFour_UI

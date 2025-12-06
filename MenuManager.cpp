@@ -63,7 +63,7 @@ void MenuManager::run() {
             run_four_in_a_row();
         }
        else if (choice == 5) {
-    cout << "\n Running Misère Tic-Tac-Toe...\n";
+    cout << "\n Running Misere Tic-Tac-Toe...\n";
     run_misere_ttt();
        }
         else if (choice == 6) {
@@ -166,8 +166,8 @@ void MenuManager::run_xo_game() {
 void MenuManager::run_numerical_ttt() {
     cout << "\nWelcome to the Numerical Tic-Tac-Toe\n";
     cout << "How to play it:\n";
-    cout << "1️: Player 1 uses ODD numbers (1, 3, 5, 7, 9)\n";
-    cout << "2️: Player 2 uses EVEN numbers (2, 4, 6, 8)\n";
+    cout << "1: Player 1 uses ODD numbers (1, 3, 5, 7, 9)\n";
+    cout << "2: Player 2 uses EVEN numbers (2, 4, 6, 8)\n";
     cout << "To win make a line (row, column, diagonal) that sums to 15\n\n";
 
     UI<int>* game_ui = new Numerical_UI();

@@ -13,11 +13,13 @@ add_executable(MiniBoards
     MisereTTT_Classes.cpp
     ObstaclesTTT_Classes.cpp
     FourByFour_Board.cpp
+    FourByFour_AI.cpp
     FourByFour_UI.cpp
     FiveByFiveTTT_Classes.cpp
     PyramidTTT_Classes.cpp
     WordTTT_Classes.cpp
     UltimateTTT_Classes.cpp
+    Diamond.cpp
 )
 configure_file(${CMAKE_SOURCE_DIR}/dic.txt ${CMAKE_BINARY_DIR}/Debug/dic.txt COPYONLY)
 target_include_directories(MiniBoards PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

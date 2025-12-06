@@ -9,7 +9,43 @@
 #ifndef FOURBYFOUR_BOARD_H
 #define FOURBYFOUR_BOARD_H
 
-#include "../BoardGame_Classes.h"
+#include "BoardGame_Classes.h"
+
+/**
+ * @class FourByFour_Move
+ * @brief Represents a move in 4x4 Tic-Tac-Toe with source and destination.
+ *
+ * Stores the source and destination coordinates along with the symbol.
+ *
+ * @see Move
+ */
+class FourByFour_Move : public Move<char> {
+    int nx;
+    int ny;
+public:
+    /**
+     * @brief Constructs a 4x4 move with source and destination.
+     * @param x Source row.
+     * @param y Source column.
+     * @param newx Destination row.
+     * @param newy Destination column.
+     * @param s The player's symbol.
+     */
+    FourByFour_Move(int x, int y, int newx, int newy, char s) 
+        : Move<char>(x, y, s), nx(newx), ny(newy) {}
+
+    /**
+     * @brief Gets the destination row.
+     * @return The destination row index.
+     */
+    int getNewX() const { return nx; }
+
+    /**
+     * @brief Gets the destination column.
+     * @return The destination column index.
+     */
+    int getNewY() const { return ny; }
+};
 
 /**
  * @class FourByFour_Board

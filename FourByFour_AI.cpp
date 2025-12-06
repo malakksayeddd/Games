@@ -45,7 +45,7 @@ Move<char>* FourByFour_AI::get_best_move(FourByFour_Board* board) {
                     int nx = x + dx[d];
                     int ny = y + dy[d];
 
-                    Move<char>* m = new Move<char>(x, y, nx, ny, ai_symbol);
+                    FourByFour_Move* m = new FourByFour_Move(x, y, nx, ny, ai_symbol);
 
                     if (board->update_board(m)) {
 
@@ -58,7 +58,7 @@ Move<char>* FourByFour_AI::get_best_move(FourByFour_Board* board) {
 
                         if (score > bestScore) {
                             bestScore = score;
-                            bestMove = new Move<char>(x, y, nx, ny, ai_symbol);
+                            bestMove = new FourByFour_Move(x, y, nx, ny, ai_symbol);
                         }}
 
                     delete m;
@@ -102,7 +102,7 @@ int FourByFour_AI::minimax(FourByFour_Board* board, int depth, bool maximizing) 
                         int nx = x + dx[d];
                         int ny = y + dy[d];
 
-                        Move<char>* m = new Move<char>(x, y, nx, ny, ai_symbol);
+                        FourByFour_Move* m = new FourByFour_Move(x, y, nx, ny, ai_symbol);
 
                         if (board->update_board(m)) {
 
@@ -134,7 +134,7 @@ int FourByFour_AI::minimax(FourByFour_Board* board, int depth, bool maximizing) 
                         int nx = x + dx[d];
                         int ny = y + dy[d];
 
-                        Move<char>* m = new Move<char>(x, y, nx, ny, human_symbol);
+                        FourByFour_Move* m = new FourByFour_Move(x, y, nx, ny, human_symbol);
 
                         if (board->update_board(m)) {
 

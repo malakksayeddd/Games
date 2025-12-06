@@ -47,11 +47,12 @@ bool FourByFour_Board::in_bounds(int r, int c) {
  * @return true if the move was valid and applied, false otherwise.
  */
 bool FourByFour_Board::update_board(Move<char>* move) {
-    int x = move->get_x();
-    int y = move->get_y();
-    int nx = move->getNewX();
-    int ny = move->getNewY();
-    char s = move->get_symbol();
+    FourByFour_Move* fmove = (FourByFour_Move*)move;
+    int x = fmove->get_x();
+    int y = fmove->get_y();
+    int nx = fmove->getNewX();
+    int ny = fmove->getNewY();
+    char s = fmove->get_symbol();
 
     if (!in_bounds(x, y) || !in_bounds(nx, ny))
         return false;

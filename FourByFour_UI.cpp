@@ -4,6 +4,8 @@
  */
 
 #include "FourByFour_UI.h"
+#include "FourByFour_AI.h"
+#include "FourByFour_Board.h"
 #include <iostream>
 
 using namespace std;
@@ -54,6 +56,6 @@ Move<char>* FourByFour_UI::get_move(Player<char>* player) {
     cout << "To (row col): ";
     cin >> nx >> ny;
 
-    return new Move<char>(x, y, nx, ny, player->get_symbol());
+    return new FourByFour_Move(x, y, nx, ny, player->get_symbol());
 }
 
