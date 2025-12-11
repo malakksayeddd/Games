@@ -100,7 +100,10 @@ void MenuManager::run() {
     run_DiamondTTT() ;
     
 }
-        else if (choice == 14) {
+            else if (choice == 14) {
+            run_memory_ttt();
+        }
+        else if (choice == 15) {
             cout << "\n Exiting the program. Goodbye!\n";
             break;
         }
