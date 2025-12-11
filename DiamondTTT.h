@@ -67,7 +67,7 @@ private:
     /**
      * @brief Internal 5x5 board storing only '.' , 'X' , 'O'.
      */
-    char board_internal[5][5];
+    char board_internal[7][7];
 
     /**
      * @brief Stores all valid diamond-shaped coordinates.
