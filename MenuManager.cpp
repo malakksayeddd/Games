@@ -488,4 +488,19 @@ void MenuManager::run_DiamondTTT()
     g.play();
 }
 
+//-----------------------MEMORY Tic Tac Toe-------------------------
+void MenuManager::run_memory_ttt() {
+    UI<char>* ui = new MemoryTTT_UI();
+    Board<char>* b = new MemoryTTT_Board();
+    Player<char>** p = ui->setup_players();
+
+    GameManager<char> game(b, p, ui);
+    game.run();
+
+    delete b;
+    delete p[0];
+    delete p[1];
+    delete[] p;
+    delete ui;
+}
 
