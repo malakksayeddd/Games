@@ -7,7 +7,7 @@ using namespace std;
 /**
  * @brief Constructor initializes the board and precalculates lines.
  */
-DiamondTTT::DiamondTTT() : Board<char>(5, 5) {
+DiamondTTT::DiamondTTT() : Board<char>(7, 7) {
     init_board();
     collect_valid_cells();
     build_all_lines();
@@ -17,8 +17,8 @@ DiamondTTT::DiamondTTT() : Board<char>(5, 5) {
  * @brief Fills internal board with '.'.
  */
 void DiamondTTT::init_board() {
-    for (int r = 0; r < 5; r++)
-        for (int c = 0; c < 5; c++)
+    for (int r = 0; r < 7; r++)
+        for (int c = 0; c < 7; c++)
             board_internal[r][c] = '.';
 }
 
@@ -26,8 +26,8 @@ void DiamondTTT::init_board() {
  * @brief Checks if coordinates (r,c) lie inside the diamond shape.
  */
 bool DiamondTTT::is_valid_cell(int r, int c) const {
-    if (r < 0 || r >= 5 || c < 0 || c >= 5) return false;
-    return (abs(r - 2) + abs(c - 2)) <= 2;
+    if (r < 0 || r >= 7 || c < 0 || c >= 7) return false;
+    return (abs(r - 3) + abs(c - 3)) <= 3;
 }
 
 /**
@@ -35,8 +35,8 @@ bool DiamondTTT::is_valid_cell(int r, int c) const {
  */
 void DiamondTTT::collect_valid_cells() {
     valid_cells.clear();
-    for (int r = 0; r < 5; r++)
-        for (int c = 0; c < 5; c++)
+    for (int r = 0; r < 7; r++)
+        for (int c = 0; c < 7; c++)
             if (is_valid_cell(r, c))
                 valid_cells.push_back({ r,c });
 }
@@ -89,10 +89,10 @@ void DiamondTTT::build_all_lines() {
  * @brief Prints the diamond board.
  */
 void DiamondTTT::print_board() const {
-    cout << "\n   0 1 2 3 4\n";
-    for (int r = 0; r < 5; r++) {
+    cout << "\n   0 1 2 3 4 5 6 \n";
+    for (int r = 0; r < 7; r++) {
         cout << r << "  ";
-        for (int c = 0; c < 5; c++) {
+        for (int c = 0; c < 7; c++) {
             if (!is_valid_cell(r, c)) cout << "  ";
             else cout << board_internal[r][c] << " ";
         }
