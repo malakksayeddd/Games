@@ -26,6 +26,7 @@
 #include "PyramidTTT_Classes.h"
 #include "UltimateTTT_Classes.h"
 #include "DiamondTTT.h"
+#include "MemoryTTT_Classes.h"
 /**
  * @class MenuManager
  * @brief Manages the main game selection menu.
@@ -120,6 +121,7 @@ private:
      * @return The selected menu option number.
      */
     void run_DiamondTTT();
+    void run_memory_ttt();
     int get_choice();
 };
 
