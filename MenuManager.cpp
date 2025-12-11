@@ -21,6 +21,8 @@
 #include "WordTTT_Classes.h"
 #include "UltimateTTT_Classes.h"
 #include "DiamondTTT.h"
+#include "MemoryTTT_Board.h"
+#include "MemoryTTT_UI.h"
 using namespace std;
 
 /**
@@ -31,7 +33,7 @@ using namespace std;
 MenuManager::MenuManager() {
     games = { "X-O (Tic-Tac-Toe)", "Numerical Tic-Tac-Toe", "SUS Game", "Four-in-a-Row", "Misère Tic-Tac-Toe (Inverse XO)"
         , "Infinity Tic-Tac-Toe", "Obstacles Tic-Tac-Toe", "4x4 Tic-Tac-Toe", "5x5 Tic-Tac-Toe","Word  Tic-Tac-Toe", "Pyramid Tic-Tac-Toe", "Ultimate Tic-Tac-Toe",
-        "Diamond Tic-Tac-Toe", "Exit" };
+        "Diamond Tic-Tac-Toe", "Memory Tic-Tac-Toe", "Exit" };
     srand(static_cast<unsigned int>(time(0)));
 }
 

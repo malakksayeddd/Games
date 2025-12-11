@@ -20,6 +20,8 @@ add_executable(MiniBoards
     WordTTT_Classes.cpp
     UltimateTTT_Classes.cpp
     Diamond.cpp
+    MemoryTTT_Board.cpp
+    MemoryTTT_UI.cpp
 )
 configure_file(${CMAKE_SOURCE_DIR}/dic.txt ${CMAKE_BINARY_DIR}/Debug/dic.txt COPYONLY)
 target_include_directories(MiniBoards PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
